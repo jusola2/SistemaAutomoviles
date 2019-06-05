@@ -111,7 +111,11 @@ public class LogIn extends javax.swing.JFrame {
 
     private void LogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogActionPerformed
         // TODO add your handling code here:
-        controller.CommandAplicator("test");
+        //controller.CommandAplicator("test");
+        PrincipalFacturador pf = new PrincipalFacturador();
+        pf.setWindowParam(controller);
+        pf.getStrings();
+        pf.setVisible(true);
     }//GEN-LAST:event_LogActionPerformed
 
     /**

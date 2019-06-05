@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import java.util.ArrayList;
 import sistemaautomoviles.ConnectionSQL;
 
 /**
@@ -23,6 +24,10 @@ public class GlobalController {
         if(command.equals((String) "test")){
             serverConnection.startConnectionTest();
         }
+    }
+    
+    public ArrayList<String> users(){
+        return serverConnection.getUser();
     }
     
 }

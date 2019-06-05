@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class ConnectionSQL {
     private Connection con;
@@ -53,6 +54,27 @@ public class ConnectionSQL {
         return connectionState;
     }
     
+    public ArrayList<String> getUser(){
+        ArrayList<String> list = new ArrayList<>();
+        try{
+            Statement stmt = con.createStatement(); 
+            String SQL = "SELECT  * FROM Contact";
+            ResultSet rs = stmt.executeQuery(SQL);
+            
+            // Iterate through the data in the result set and display it.
+            while (rs.next()) {
+                list.add(rs.getString("FirstName") + " " + rs.getString("LastName")); 
+                System.out.println(rs.getString("FirstName") + " " + rs.getString("LastName"));
+            }
+            //con.close();
+            
+        }
+        // Handle any errors that may have occurred.
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     
 
     public void startConnectionTest(){        
