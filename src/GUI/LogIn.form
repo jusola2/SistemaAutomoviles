@@ -39,7 +39,7 @@
                           <Component id="jLabel1" max="32767" attributes="0"/>
                           <Component id="jLabel2" pref="85" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="63" max="32767" attributes="0"/>
+                      <EmptySpace pref="75" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="Log" min="-2" max="-2" attributes="0"/>
                           <Component id="jPasswordField1" max="32767" attributes="0"/>
@@ -80,9 +80,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="jPasswordField1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jPasswordField1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="Log">
       <Properties>
