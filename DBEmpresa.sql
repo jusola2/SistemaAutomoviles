@@ -4,20 +4,11 @@ use [Empresa]
 
 create table Sucursal(
 	IdSucursal int identity(1,1) PRIMARY KEY,
+	NombreS nvarchar(50),
 	HoraAbertura int NOT NULL,
 	HoraCierre int NOT NULL
 );
 
-create table EstadoInventario(
-	IdEstado int identity(1,1) PRIMARY KEY,
-	Estado int NOT NULL
-);
-
-create table Inventario(
-	IdInventario int identity(1,1) PRIMARY KEY,
-	IdSucursal int foreign KEY REFERENCES Sucursal(IdSucursal),
-	IdEstado int foreign KEY REFERENCES EstadoInventario(IdEstado),
-);
 
 create table TipoEmpleadoSucursal(
 	IdTipoEmpleado int identity(1,1) PRIMARY KEY,
@@ -28,9 +19,9 @@ create table Empleado(
 	IdEmpleado int identity(1,1) PRIMARY KEY,
 	Nombre nvarchar(50) NOT NULL,
 	Apellido nvarchar(50) NOT NULL,
-	Correo nvarchar(120) NOT NULL,
 	FechaIngreso date NOT NULL,
-	IdTipoEmpleado int foreign KEY REFERENCES TipoEmpleadoSucursal(IdTipoEmpleado)
+	IdTipoEmpleado int foreign KEY REFERENCES TipoEmpleadoSucursal(IdTipoEmpleado),
+	IdSucursal int foreign KEY REFERENCES Sucursal(IdSucursal)
 );
 
 create table DireccionCliente(
