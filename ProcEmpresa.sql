@@ -88,7 +88,7 @@ CREATE PROCEDURE CRUD_Cliente (@IdCliente int,@Nombre nvarchar(50),@Apellido nva
 AS
 BEGIN 
 	
-	EXEC CUD_Direccion @IdCliente,@Provincia,@Distrito,@Opc
+	EXEC CRUD_Direccion @IdCliente,@Provincia,@Distrito,@Opc
 
 	IF @Opc = 1
 	BEGIN 

@@ -67,7 +67,7 @@ create table CaracteristicaXPedido(
 );
 
 create table Automovil(
-	Serial int identity(1,1) PRIMARY KEY,
+	Serial int PRIMARY KEY,
 	IdModelo int foreign KEY REFERENCES ModeloAutomovil(IdModeloAutomovil),
 	IdTipoAuto int foreign KEY REFERENCES TipoAuto(IdTipoAuto),
 	Color nvarchar(50) NOT NULL,
@@ -97,9 +97,9 @@ create table Empleado(
 	IdEmpleado int identity(1,1) PRIMARY KEY,
 	Nombre nvarchar(50) NOT NULL,
 	Apellido nvarchar(50) NOT NULL,
-	Correo nvarchar(120) NOT NULL,
 	FechaIngreso date NOT NULL,
-	IdTipoEmpleado int foreign KEY REFERENCES TipoEmpleadoFabrica(IdTipoEmpleado)
+	IdTipoEmpleado int foreign KEY REFERENCES TipoEmpleadoFabrica(IdTipoEmpleado),
+	
 );
 
 
