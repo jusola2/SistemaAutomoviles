@@ -6,6 +6,7 @@
 package GUI;
 
 import Controller.GlobalController;
+import Logic.ControllerCompatible;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
@@ -13,7 +14,7 @@ import javax.swing.DefaultListModel;
  *
  * @author juanj
  */
-public class PrincipalFacturador extends javax.swing.JFrame {
+public class PrincipalFacturador extends javax.swing.JFrame implements ControllerCompatible{
 
     protected GlobalController controller;
     private DefaultListModel model = new DefaultListModel();
@@ -114,12 +115,12 @@ public class PrincipalFacturador extends javax.swing.JFrame {
         });
     }
     
-    public void setWindowParam(GlobalController Pcontroller){
+    @Override
+    public void setController(GlobalController Pcontroller){
         controller = Pcontroller;
     }
     
     public void getStrings(){
-        //String[] strings = {"a","b","c"};
         ArrayList<String> strings = controller.users(); 
         for(String st:strings){
             model.addElement(st);
