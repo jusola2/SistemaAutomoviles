@@ -105,6 +105,19 @@ public class ConnectionSQL {
         }
     }
     
+    public String getTypeOfEmployee(int IdEmpleado){
+        String tempType = null;
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.getEmployeeType  (?, ?)}");) {  
+        cstmt.setInt(1, IdEmpleado);
+        cstmt.registerOutParameter(2, java.sql.Types.NVARCHAR);  
+        cstmt.execute();
+        tempType = cstmt.getNString(2);  
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tempType;
+    }
+    
     public UserData logInInfo(String email, String password){
         int tempID = 0;
         String tempType = null;
@@ -115,8 +128,6 @@ public class ConnectionSQL {
         cstmt.registerOutParameter(4, java.sql.Types.NVARCHAR);  
         cstmt.execute();
         tempID = cstmt.getInt(3);
-        System.out.println("BD ID: " + cstmt.getInt(3));
-        System.out.println("BD Type: " + cstmt.getNString(4));  
         tempType = cstmt.getNString(4);  
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
