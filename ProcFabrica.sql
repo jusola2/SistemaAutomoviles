@@ -1,4 +1,14 @@
 use Fabrica
+
+Go
+CREATE PROCEDURE getIdModel (@Nombre nvarchar(50),@id int out)
+AS
+BEGIN 
+	select @id = ma.IdModeloAutomovil
+	from ModeloAutomovil ma 
+	where ma.NombreModelo = @Nombre
+END
+
 --=============================== Tipo Combustible ======================================================================
 
 -- Combustible Auto
