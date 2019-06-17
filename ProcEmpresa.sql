@@ -257,6 +257,7 @@ BEGIN
 			From Cliente C
 			inner join DireccionCliente D on C.IdDireccion=D.IdDireccion
 			inner join Sucursal S on C.IdSucursal=S.IdSucursal 
+			Where IdCliente=isnull(@IdCliente,IdCliente)
 		END
 	end try
 	begin catch
@@ -379,6 +380,7 @@ begin try
 			From Empleado E
 			inner join TipoEmpleadoSucursal T on E.IdTipoEmpleado=T.IdTipoEmpleado
 			inner join Sucursal S on E.IdSucursal = S.IdSucursal 
+			Where IdEmpleado=isnull(@IdEmpleado,IdEmpleado)
 		END
 	end try
 	begin catch
