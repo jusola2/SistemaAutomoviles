@@ -5,12 +5,18 @@
  */
 package GUI;
 
+import Controller.GlobalController;
+import Logic.ControllerCompatible;
+import javax.swing.JFrame;
+
 /**
  *
  * @author steph
  */
-public class AgregarAutos extends javax.swing.JFrame {
+public class AgregarAutos extends javax.swing.JFrame implements ControllerCompatible{
 
+    protected GlobalController controller;
+    private JFrame anterior;
     /**
      * Creates new form AgregarAutos
      */
@@ -39,7 +45,7 @@ public class AgregarAutos extends javax.swing.JFrame {
         txtAnno = new javax.swing.JTextField();
         txtSerie = new javax.swing.JTextField();
         txtRuta = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        tCombustible = new javax.swing.JComboBox<>();
         txtPrecio = new javax.swing.JTextField();
         txtTipo = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -88,10 +94,10 @@ public class AgregarAutos extends javax.swing.JFrame {
         txtRuta.setText(" ");
         txtRuta.setToolTipText("");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        tCombustible.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        tCombustible.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                tCombustibleActionPerformed(evt);
             }
         });
 
@@ -168,7 +174,7 @@ public class AgregarAutos extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel7)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(tCombustible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jCheckBox1)
@@ -178,7 +184,7 @@ public class AgregarAutos extends javax.swing.JFrame {
                                 .addComponent(jCheckBox3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCheckBox4)))
-                        .addGap(20, 20, 20)
+                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
@@ -201,7 +207,7 @@ public class AgregarAutos extends javax.swing.JFrame {
                                     .addGap(57, 57, 57)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel10)
-                                .addGap(32, 32, 32)
+                                .addGap(18, 18, 18)
                                 .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(183, 183, 183)
@@ -222,18 +228,18 @@ public class AgregarAutos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel5)
-                    .addComponent(txtAnno, javax.swing.GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
-                    .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 24, Short.MAX_VALUE))
+                    .addComponent(txtAnno, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(txtSerie))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel6)
                     .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, Short.MAX_VALUE))
+                    .addComponent(txtTipo))
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tCombustible, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
@@ -269,9 +275,9 @@ public class AgregarAutos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void tCombustibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCombustibleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_tCombustibleActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
@@ -290,9 +296,8 @@ public class AgregarAutos extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AutoAdministrador AutoA = new AutoAdministrador();
-        AutoA.setVisible(true);
-        AutoA.dispose();
+        anterior.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtAnnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnnoActionPerformed
@@ -342,7 +347,6 @@ public class AgregarAutos extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -353,6 +357,7 @@ public class AgregarAutos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JComboBox<String> tCombustible;
     private javax.swing.JTextField txtAnno;
     private javax.swing.JTextField txtColor;
     private javax.swing.JTextField txtModelo;
@@ -361,4 +366,14 @@ public class AgregarAutos extends javax.swing.JFrame {
     private javax.swing.JTextField txtSerie;
     private javax.swing.JTextField txtTipo;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setController(GlobalController Pcontroller) {
+        controller=Pcontroller;
+    }
+
+    @Override
+    public void ventanaAnterior(JFrame ventana) {
+        anterior = ventana;
+    }
 }

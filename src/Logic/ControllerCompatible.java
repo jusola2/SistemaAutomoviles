@@ -6,6 +6,7 @@
 package Logic;
 
 import Controller.GlobalController;
+import javax.swing.JFrame;
 
 /**
  *
@@ -13,4 +14,5 @@ import Controller.GlobalController;
  */
 public interface ControllerCompatible {
     public void setController(GlobalController Pcontroller);
+    public void ventanaAnterior(JFrame ventana);
 }

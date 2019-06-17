@@ -117,6 +117,7 @@ public class LogIn extends javax.swing.JFrame {
             case "Administrador":
                 VentanaAdministrador AWindow = new VentanaAdministrador();
                 AWindow.setController(controller);
+                AWindow.ventanaAnterior(this);
                 AWindow.setVisible(true);
                 break;
             case "Vendedor":
@@ -124,6 +125,7 @@ public class LogIn extends javax.swing.JFrame {
             case "Facturador":
                 PrincipalFacturador pf = new PrincipalFacturador();
                 pf.setController(controller);
+                pf.ventanaAnterior(this);
                 pf.setVisible(true);
                 break;
             default:
