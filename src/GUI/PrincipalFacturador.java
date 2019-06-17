@@ -111,10 +111,11 @@ public class PrincipalFacturador extends javax.swing.JFrame implements Controlle
     @Override
     public void setController(GlobalController Pcontroller){
         controller = Pcontroller;
+        getStrings();
     }
     
     public void getStrings(){
-        ArrayList<String> strings = controller.users(); 
+        ArrayList<String> strings = controller.ordenesPago();
         for(String st:strings){
             model.addElement(st);
         }

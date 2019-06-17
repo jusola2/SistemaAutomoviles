@@ -47,4 +47,8 @@ public class GlobalController {
         return serverConnection.getUser();
     }
     
+    public ArrayList<String> ordenesPago(){
+        return serverConnection.getOrdenesPago();
+    }
+    
 }
