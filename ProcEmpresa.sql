@@ -60,7 +60,7 @@ CREATE PROCEDURE IngresarModelo
 	@Resultado int out
 AS  
 BEGIN  
-   execute [Fabrica].[dbo].[CRUD_ModeloAutomovil] null,@Nombre,@AnnoModelo,@PrecioBase,1,@Resultado
+   execute [Fabrica].[dbo].[CRUD_ModeloAutomovil] null,@Nombre,@AnnoModelo,@PrecioBase,1,@Resultado out
 END
 
 --======================================================================
