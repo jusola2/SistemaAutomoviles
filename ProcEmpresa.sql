@@ -71,7 +71,7 @@ CREATE PROCEDURE getModelIdByName
 	@IdModelo int out
 AS  
 BEGIN  
-   execute [Fabrica].[dbo].[getIdModel] @Nombre, @IdModelo
+   execute [Fabrica].[dbo].[getIdModel] @Nombre, @IdModelo out
 END
 
 
