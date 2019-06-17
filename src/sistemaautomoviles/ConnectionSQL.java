@@ -9,6 +9,7 @@ package sistemaautomoviles;
  *
  * @author juanj
  */
+import Logic.UserData;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -104,17 +105,26 @@ public class ConnectionSQL {
         }
     }
     
-    public void logInInfo(String email, String password){
+    public UserData logInInfo(String email, String password){
+        int tempID = 0;
+        String tempType = null;
         try(CallableStatement cstmt = con.prepareCall("{call dbo.getLogInId (?, ?, ?, ?)}");) {  
         cstmt.setNString(1, email);
         cstmt.setNString(2, password);
         cstmt.registerOutParameter(3, java.sql.Types.INTEGER);  
         cstmt.registerOutParameter(4, java.sql.Types.NVARCHAR);  
-        cstmt.execute();  
+        cstmt.execute();
+        tempID = cstmt.getInt(3);
         System.out.println("BD ID: " + cstmt.getInt(3));
         System.out.println("BD Type: " + cstmt.getNString(4));  
+        tempType = cstmt.getNString(4);  
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(tempID !=0){
+            return new UserData(tempID, tempType);
+        }else{
+            return null;
         }
     }
     

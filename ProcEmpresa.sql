@@ -10,37 +10,70 @@ CREATE PROCEDURE getLogInId
 AS  
 BEGIN  
    SELECT @IdUser = ISNULL(ua.IdEnBase,-1), @Type = ISNULL(tp.Tipo,'ninguno')
-   FROM UsuarioAplicacion ua inner join TipoUsuario tp on ua.IdTipoUsuario=tp.Tipo
+   FROM UsuarioAplicacion ua inner join TipoUsuario tp on ua.IdTipoUsuario=tp.Id
    WHERE ua.Email = @email and @contraseña = ua.Contraseña 
 END
+
+
 
 
 --=============================== Sucursal ======================================================================
 
 GO
-CREATE PROCEDURE CRUD_Sucursal (@IdSucursal int,@NombreS nvarchar(50),@HoraAbertura int,@HoraCierre int, @Opc int)
+CREATE PROCEDURE CRUD_Sucursal (@IdSucursal int,@NombreS nvarchar(50),@HoraAbertura int,@HoraCierre int, @Opc int, @Resultado int out)
 AS
 BEGIN 
-	IF @Opc = 1
-	BEGIN 
-		Insert Into Sucursal
-		Values  (@NombreS,@HoraAbertura,@HoraCierre);
-	END
-	IF @Opc = 2
-	BEGIN
-		Update Sucursal Set NombreS=isnull(NombreS,@NombreS),HoraAbertura =isnull(HoraAbertura,@HoraAbertura),
-		HoraCierre= isnull(HoraCierre,@HoraCierre)
-		where IdSucursal=@IdSucursal
-	END
-	IF @Opc = 3
-	BEGIN
-		Delete from Sucursal where IdSucursal=@IdSucursal
-	END
-	IF @Opc = 4
-	BEGIN
-		Select S.NombreS, S.HoraAbertura, S.HoraCierre
-		From Sucursal S
-	END
+	begin try
+		set @Resultado = 1;
+		IF @Opc = 1
+		BEGIN 
+			begin try
+				begin tran 
+					Insert Into Sucursal
+					Values  (@NombreS,@HoraAbertura,@HoraCierre);
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 2
+		BEGIN
+			begin try
+				begin tran 
+					Update Sucursal Set NombreS=isnull(NombreS,@NombreS),HoraAbertura =isnull(HoraAbertura,@HoraAbertura),
+					HoraCierre= isnull(HoraCierre,@HoraCierre)
+					where IdSucursal=@IdSucursal
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 3
+		BEGIN
+			begin try
+				begin tran
+					Delete from Sucursal where IdSucursal=@IdSucursal
+				commit 
+			end try
+			begin catch
+				rollback
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 4
+		BEGIN
+			Select S.NombreS, S.HoraAbertura, S.HoraCierre
+			From Sucursal S
+			where S.IdSucursal = ISNULL(@IdSucursal,S.IdSucursal) 
+		END
+	end try
+	begin catch
+		set @Resultado = 0;
+	end catch
 END
 
 

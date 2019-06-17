@@ -64,8 +64,6 @@ public class LogIn extends javax.swing.JFrame {
 
         jLabel3.setText("Sistema Automoviles");
 
-        password.setText("jTextField2");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(

@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Logic.UserData;
 import java.util.ArrayList;
 import sistemaautomoviles.ConnectionSQL;
 
@@ -15,6 +16,8 @@ import sistemaautomoviles.ConnectionSQL;
 public class GlobalController {
     
     protected ConnectionSQL serverConnection;
+    
+    private UserData ActualUser;
     
     public GlobalController(){
         serverConnection = new ConnectionSQL(1);
@@ -27,7 +30,10 @@ public class GlobalController {
     }
     
     public void logIn(String email, String password){
-        serverConnection.logInInfo(email, password);
+        ActualUser = serverConnection.logInInfo(email, password);
+        if(ActualUser!= null){
+            System.out.println("It work");
+        }
     }
     
     public ArrayList<String> users(){
