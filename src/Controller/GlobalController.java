@@ -29,11 +29,18 @@ public class GlobalController {
         }
     }
     
-    public void logIn(String email, String password){
+    public String logIn(String email, String password){
+        String result = null;
         ActualUser = serverConnection.logInInfo(email, password);
         if(ActualUser!= null){
-            System.out.println("It work");
+            if("Empleado".equals(ActualUser.getUserType())){
+                ActualUser.setEmployeeType(serverConnection.getTypeOfEmployee(ActualUser.getBDId()));
+                result = ActualUser.getEmployeeType();
+            }else{
+                result = "Cliente";
+            }
         }
+        return result;
     }
     
     public ArrayList<String> users(){

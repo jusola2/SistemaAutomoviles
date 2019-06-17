@@ -118,7 +118,24 @@ public class LogIn extends javax.swing.JFrame {
         //System.out.println(getSHA(jPasswordField1.getPassword().toString()));
         System.out.println(getSHA(password.getText()));
         //controller.CommandAplicator("test", getSHA(password.getText()));
-        controller.logIn(jTextField1.getText(), getSHA(password.getText()));
+        String typeUser = controller.logIn(jTextField1.getText(), getSHA(password.getText()));
+        if(null!=typeUser)switch (typeUser) {
+            case "Administrador":
+                VentanaAdministrador AWindow = new VentanaAdministrador();
+                AWindow.setController(controller);
+                AWindow.setVisible(true);
+                break;
+            case "Vendedor":
+                break;
+            case "Facturador":
+                PrincipalFacturador pf = new PrincipalFacturador();
+                pf.setController(controller);
+                pf.setVisible(true);
+                break;
+            default:
+                break;
+        }
+        this.setVisible(false);
     }//GEN-LAST:event_LogActionPerformed
 
     /**
