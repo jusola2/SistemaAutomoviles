@@ -22,6 +22,9 @@ public class ModeloVehiculo {
     private double preciobase;
 
     public ModeloVehiculo() {
+        combustibles = new ArrayList<>();
+        tipos = new  ArrayList<>();
+        caracteristicas = new ArrayList<>();        
     }
     
     public void addCombustible(Combustible entrante){

@@ -65,6 +65,8 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
         tTipos = new javax.swing.JComboBox<>();
         addType = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        nombre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,6 +100,11 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
         });
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnCargarImg.setText("Cargar");
 
@@ -111,12 +118,19 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
         });
 
         addCarc.setText("Agregar");
+        addCarc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCarcActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Tipoos: ");
 
         addType.setText("Agregar");
 
         jLabel5.setText("$");
+
+        jLabel6.setText("Nombre del modelo:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,9 +151,8 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(tTipos, 0, 113, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(tCaracteristicas, 0, 113, Short.MAX_VALUE)
-                                .addComponent(tCombustible, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(tCaracteristicas, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tCombustible, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(43, 43, 43)
@@ -174,7 +187,12 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(Anno, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Anno, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(51, 135, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -197,6 +215,10 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tTipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addType))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(Anno, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -214,7 +236,7 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
                     .addComponent(jButton1))
-                .addGap(94, 94, 94))
+                .addGap(32, 32, 32))
         );
 
         pack();
@@ -232,6 +254,19 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
     private void addComActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addComActionPerformed
         nuevoModelo.addCombustible(comList.get(tCombustible.getSelectedIndex()));
     }//GEN-LAST:event_addComActionPerformed
+
+    private void addCarcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarcActionPerformed
+        nuevoModelo.addCaracteristica(caracteristicasList.get(tCaracteristicas.getSelectedIndex()));
+    }//GEN-LAST:event_addCarcActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        nuevoModelo.setName(nombre.getText());
+        
+        ConfirModelo confirmacion = new ConfirModelo();
+        confirmacion.setWindow(this, nuevoModelo);
+        confirmacion.setVisible(true);
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,7 +318,9 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JTextField nombre;
     private javax.swing.JComboBox<String> tCaracteristicas;
     private javax.swing.JComboBox<String> tCombustible;
     private javax.swing.JComboBox<String> tTipos;
@@ -322,5 +359,10 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
     @Override
     public void ventanaAnterior(JFrame ventana) {
         anterior = ventana;
+    }
+    
+    public void confirmacionCreacion(){
+        System.out.println("GUI.AgregarModelo.confirmacionCreacion()");
+        System.out.println("se va a meter en la BD");
     }
 }
