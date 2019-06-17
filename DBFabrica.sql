@@ -9,19 +9,18 @@ create table TipoCombustible(
 );
 
 
-create table ModeloAutomovil (--se cambio 
+create table ModeloAutomovil (
 	IdModeloAutomovil int identity(1,1) PRIMARY KEY,
 	NombreModelo nvarchar(50) NOT NULL,
 	AnnoModelo int NOT NULL,
 	PrecioBase int NOT NULL
 );
 
-create table CombustibleXModelo(--se cambio 
+create table CombustibleXModelo( 
 	Id int identity(1,1) PRIMARY KEY,
 	IdTipoCombus int foreign KEY REFERENCES TipoCombustible(IdTipoCombus),
 	IdModelo int foreign KEY REFERENCES ModeloAutomovil(IdModeloAutomovil)
 );
-
 
 create table TipoAuto (
 	IdTipoAuto int  identity(1,1) PRIMARY KEY,
@@ -73,7 +72,7 @@ create table CaracteristicaXPedido(
 	Linea nvarchar(50) NOT NULL
 );
 
-create table Automovil(--se cambio 
+create table Automovil(
 	Serial int PRIMARY KEY,
 	IdModelo int foreign KEY REFERENCES ModeloAutomovil(IdModeloAutomovil),
 	IdTipoAuto int foreign KEY REFERENCES TipoAuto(IdTipoAuto),

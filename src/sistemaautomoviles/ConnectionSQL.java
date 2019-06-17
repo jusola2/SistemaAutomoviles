@@ -9,7 +9,10 @@ package sistemaautomoviles;
  *
  * @author juanj
  */
+import Logic.Caracteristica;
 import Logic.Combustible;
+import Logic.ModeloVehiculo;
+import Logic.TipoModelo;
 import Logic.UserData;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -169,5 +172,48 @@ public class ConnectionSQL {
             Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    public ArrayList<Caracteristica> caracteristicas() {
+        ArrayList<Caracteristica> list = new ArrayList<>();
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.getCaract()}");) {  
+        ResultSet rs = cstmt.executeQuery();
+        while (rs.next()) {
+                list.add(new Caracteristica(rs.getInt(1), rs.getString(2), rs.getDouble(3)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public ArrayList<TipoModelo> tiposVehiculos() {
+        ArrayList<TipoModelo> list = new ArrayList<>();
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.getVehTypes()}");) {  
+        ResultSet rs = cstmt.executeQuery();
+        while (rs.next()) {
+                list.add(new TipoModelo(rs.getInt(1), rs.getString(2)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public boolean nuevoModelo(ModeloVehiculo nuevoModelo) {
+        boolean resultado = false;
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.IngresarModelo  (?, ?, ?, ?)}");) {  
+        cstmt.setNString(1, nuevoModelo.getName());
+        cstmt.setInt(2, nuevoModelo.getAnoo());
+        cstmt.setInt(3, (int)nuevoModelo.getPreciobase()); 
+        cstmt.registerOutParameter(4, java.sql.Types.INTEGER);  
+        cstmt.execute();
+        if(cstmt.getInt(4)!=0){
+            resultado=true;
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultado;
     }
 }
