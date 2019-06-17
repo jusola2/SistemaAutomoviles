@@ -5,7 +5,9 @@
  */
 package Controller;
 
+import Logic.Caracteristica;
 import Logic.Combustible;
+import Logic.TipoModelo;
 import Logic.UserData;
 import java.util.ArrayList;
 import sistemaautomoviles.ConnectionSQL;
@@ -56,11 +58,11 @@ public class GlobalController {
         return serverConnection.combustibles();
     }
 
-    public ArrayList<Combustible> getCaracteristicas() {
+    public ArrayList<Caracteristica> getCaracteristicas() {
         return serverConnection.caracteristicas();
     }
 
-    public ArrayList<Combustible> getTiposVehiculo() {
+    public ArrayList<TipoModelo> getTiposVehiculo() {
         return serverConnection.tiposVehiculos();
     }
     
