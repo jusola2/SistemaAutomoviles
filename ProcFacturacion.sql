@@ -20,7 +20,8 @@ Go
 CREATE PROCEDURE getOrdenesPagoPendientes 
 AS  
 BEGIN  
-	select * from 
+	select op.id,op.idvehiculo,op.idcliente,op.idsucursal,op.fechageneracion from [BD_FACTURACION].[Facturacion].[public].[ordendepago] op
+	where op.IdEstado = 1;
 		
 END
 

@@ -143,4 +143,17 @@ public class ConnectionSQL {
     public void closeConnection() throws SQLException{
         con.close();
     }
+
+    public ArrayList<String> getOrdenesPago() {
+        ArrayList<String> list = new ArrayList<>();
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.getOrdenesPagoPendientes ()}");) {  
+        ResultSet rs = cstmt.executeQuery();
+        while (rs.next()) {
+                list.add(Integer.toString(rs.getInt(1)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
 }
