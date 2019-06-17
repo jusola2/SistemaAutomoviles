@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Logic.Combustible;
 import Logic.UserData;
 import java.util.ArrayList;
 import sistemaautomoviles.ConnectionSQL;
@@ -49,6 +50,10 @@ public class GlobalController {
     
     public ArrayList<String> ordenesPago(){
         return serverConnection.getOrdenesPago();
+    }
+    
+    public ArrayList<Combustible> getCombustibles(){
+        return serverConnection.combustibles();
     }
     
 }

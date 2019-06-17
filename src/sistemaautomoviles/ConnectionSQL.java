@@ -9,6 +9,7 @@ package sistemaautomoviles;
  *
  * @author juanj
  */
+import Logic.Combustible;
 import Logic.UserData;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -150,6 +151,19 @@ public class ConnectionSQL {
         ResultSet rs = cstmt.executeQuery();
         while (rs.next()) {
                 list.add(Integer.toString(rs.getInt(1)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public ArrayList<Combustible> combustibles() { 
+        ArrayList<Combustible> list = new ArrayList<>();
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.getCombusType ()}");) {  
+        ResultSet rs = cstmt.executeQuery();
+        while (rs.next()) {
+                list.add(new Combustible(rs.getInt(1), rs.getString(2)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
