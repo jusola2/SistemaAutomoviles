@@ -1,5 +1,20 @@
 use Empresa
 
+--=============================== Usuario ======================================================================
+Go
+CREATE PROCEDURE getLogInId  
+   @email  nvarchar(100), 
+   @contraseña nvarchar(max),   
+   @IdUser int OUTPUT ,
+   @Type nvarchar(max) OUTPUT 
+AS  
+BEGIN  
+   SELECT @IdUser = ISNULL(ua.IdEnBase,-1), @Type = ISNULL(tp.Tipo,'ninguno')
+   FROM UsuarioAplicacion ua inner join TipoUsuario tp on ua.IdTipoUsuario=tp.Tipo
+   WHERE ua.Email = @email and @contraseña = ua.Contraseña 
+END
+
+
 --=============================== Sucursal ======================================================================
 
 GO

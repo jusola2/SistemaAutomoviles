@@ -6,6 +6,7 @@
 package GUI;
 
 import Controller.GlobalController;
+import static Logic.Sha256Encriptor.getSHA;
 
 /**
  *
@@ -33,11 +34,11 @@ public class LogIn extends javax.swing.JFrame {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
         Log = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        password = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Log In");
@@ -63,6 +64,8 @@ public class LogIn extends javax.swing.JFrame {
 
         jLabel3.setText("Sistema Automoviles");
 
+        password.setText("jTextField2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,9 +80,9 @@ public class LogIn extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Log)
-                            .addComponent(jPasswordField1)
-                            .addComponent(jTextField1))))
+                            .addComponent(Log, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextField1)
+                            .addComponent(password))))
                 .addGap(79, 79, 79))
         );
         layout.setVerticalGroup(
@@ -92,12 +95,12 @@ public class LogIn extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextField1))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPasswordField1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(Log)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         pack();
@@ -110,10 +113,14 @@ public class LogIn extends javax.swing.JFrame {
     private void LogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogActionPerformed
         // TODO add your handling code here:
         //controller.CommandAplicator("test");
-        PrincipalFacturador pf = new PrincipalFacturador();
+        /*PrincipalFacturador pf = new PrincipalFacturador();
         pf.setWindowParam(controller);
-        pf.getStrings();
-        pf.setVisible(true);
+        //pf.getStrings();
+        pf.setVisible(true);*/
+        //System.out.println(getSHA(jPasswordField1.getPassword().toString()));
+        System.out.println(getSHA(password.getText()));
+        //controller.CommandAplicator("test", getSHA(password.getText()));
+        controller.logIn(jTextField1.getText(), getSHA(password.getText()));
     }//GEN-LAST:event_LogActionPerformed
 
     /**
@@ -156,7 +163,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField password;
     // End of variables declaration//GEN-END:variables
 }
