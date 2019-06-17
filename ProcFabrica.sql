@@ -61,7 +61,7 @@ END
 
 GO
 CREATE PROCEDURE CRUD_ModeloAutomovil(@IdModelo int,@Nombre nvarchar(50),@AnnoModelo int,
-@PrecioBase int,@Combustible int,  @Opc int,@Resultado int out)
+@PrecioBase int,  @Opc int,@Resultado int out)
 AS
 BEGIN 
 	begin try
@@ -71,7 +71,7 @@ BEGIN
 			begin try
 				begin tran 
 					Insert Into ModeloAutomovil
-					Values  (@Nombre,@AnnoModelo,@PrecioBase,@Combustible);
+					Values  (@Nombre,@AnnoModelo,@PrecioBase);
 				commit 
 			end try
 			begin catch
@@ -84,7 +84,7 @@ BEGIN
 			begin try
 				begin tran 
 					Update ModeloAutomovil Set NombreModelo=isnull(NombreModelo,@Nombre), AnnoModelo=isnull(AnnoModelo,@AnnoModelo),
-					PrecioBase=ISNULL(PrecioBase,@PrecioBase), IdCombustible=isnull(IdCombustible,@Combustible)
+					PrecioBase=ISNULL(PrecioBase,@PrecioBase)
 					where IdModeloAutomovil= @IdModelo
 				commit 
 			end try
@@ -107,9 +107,8 @@ BEGIN
 		END
 		IF @Opc = 4
 		BEGIN
-			Select  M.NombreModelo, M.AnnoModelo , M.PrecioBase, T.Detalle Combustible
+			Select  M.NombreModelo, M.AnnoModelo , M.PrecioBase
 			From  ModeloAutomovil M
-			inner join TipoCombustible T on T.IdTipoCombus = M.IdCombustible
 			Where IdModeloAutomovil=isnull(@IdModelo,IdModeloAutomovil)
 		END
 	end try
@@ -612,7 +611,7 @@ END
 
 -- Automovil
 GO
-CREATE PROCEDURE CRUD_Automovil (@Serial int,@Modelo int, @Tipo int,
+CREATE PROCEDURE CRUD_Automovil (@Serial int,@Modelo int, @Tipo int,@Combustible int,
 @Color nvarchar(50),@FechaFabricacion date, @Opc int,@Resultado int out)
 AS
 BEGIN 
@@ -623,7 +622,7 @@ BEGIN
 			begin try
 				begin tran 
 					Insert Into Automovil
-					Values  (@Serial,@Modelo,@Tipo,@Color,@FechaFabricacion);
+					Values  (@Serial,@Modelo,@Tipo,@Combustible,@Color,@FechaFabricacion);
 				commit 
 			end try
 			begin catch
@@ -636,7 +635,7 @@ BEGIN
 			begin try
 				begin tran 
 					Update Automovil Set Serial=isnull(Serial,@Serial), IdModelo=isnull(IdModelo,@Modelo),
-					IdTipoAuto=isnull(IdTipoAuto,@Tipo), Color=isnull(Color,@Color), 
+					IdTipoAuto=isnull(IdTipoAuto,@Tipo),IdCombustible=isnull(@Combustible,IdCombustible), Color=isnull(Color,@Color), 
 					FechaFabricacion=isnull(FechaFabricacion,@FechaFabricacion)
 					where Serial=@Serial
 				commit 
@@ -661,10 +660,11 @@ BEGIN
 		IF @Opc = 4
 		BEGIN
 			Select A.Serial, A.Color, M.NombreModelo, M.AnnoModelo, M.PrecioBase, TA.Detalle TipoAutomovil,
-			A.FechaFabricacion
+			TC.Detalle TipoCombustible, A.FechaFabricacion
 			From Automovil A
 			inner join ModeloAutomovil M on M.IdModeloAutomovil=A.IdModelo
 			inner join TipoAuto TA on TA.IdTipoAuto= A.IdTipoAuto	
+			inner join TipoCombustible TC on TC.IdTipoCombus= A.IdCombustible
 			Where Serial=isnull(@Serial,Serial)
 		END
 	end try
@@ -737,9 +737,9 @@ BEGIN
 	end catch
 END
 
--- CaractXAuto
+-- CombustXAuto
 GO
-CREATE PROCEDURE CRUD_CombustibleXAuto (@IdCombXAuto int,@Comb int,@Auto int, @Opc int,@Resultado int out)
+CREATE PROCEDURE CRUD_CombustibleXModelo (@IdCombXModelo int,@Comb int,@Modelo int, @Opc int,@Resultado int out)
 AS
 BEGIN 
 	begin try
@@ -748,8 +748,8 @@ BEGIN
 		BEGIN 
 			begin try
 				begin tran 
-					Insert Into CombustibleXAuto
-					Values  (@Comb,@Auto);
+					Insert Into CombustibleXModelo
+					Values  (@Comb,@Modelo);
 				commit 
 			end try
 			begin catch
@@ -761,8 +761,8 @@ BEGIN
 		BEGIN
 			begin try
 				begin tran 
-					Update CombustibleXAuto Set IdTipoCombus=isnull(IdTipoCombus,@Comb), IdAuto =isnull(IdAuto,@Auto)
-					where IdCombusXAuto=@IdCombXAuto
+					Update CombustibleXModelo Set IdTipoCombus=isnull(IdTipoCombus,@Comb), IdModelo =isnull(@Modelo,IdModelo)
+					where Id=@IdCombXModelo
 				commit 
 			end try
 			begin catch
@@ -774,7 +774,7 @@ BEGIN
 		BEGIN
 			begin try
 				begin tran
-					Delete from CombustibleXAuto where IdCombusXAuto=@IdCombXAuto
+					Delete from CombustibleXModelo where Id=@IdCombXModelo
 				commit 
 			end try
 			begin catch
@@ -784,14 +784,12 @@ BEGIN
 		END
 		IF @Opc = 4
 		BEGIN
-			Select CA.IdCombusXAuto, TC.Detalle TipoCombustible,
+			Select CM.Id, TC.Detalle TipoCombustible,
 			M.NombreModelo, M.AnnoModelo, M.PrecioBase PrecioModelo, TA.Detalle TipoAutomovil 
-			From CombustibleXAuto CA
-			inner join TipoCombustible TC on TC.IdTipoCombus= CA.IdTipoCombus
-			inner join Automovil A on A.Serial= CA.IdAuto
-			inner join ModeloAutomovil M on M.IdModeloAutomovil=A.IdModelo
-			inner join TipoAuto TA on TA.IdTipoAuto= A.IdTipoAuto	
-			Where IdCombusXAuto=isnull(@IdCombXAuto,IdCombusXAuto)
+			From CombustibleXModelo CM
+			inner join TipoCombustible TC on TC.IdTipoCombus= CM.IdTipoCombus
+			inner join ModeloAutomovil M on M.IdModeloAutomovil=CM.IdModelo
+			Where Id=isnull(@IdCombXModelo,Id)
 		END
 	end try
 	begin catch
