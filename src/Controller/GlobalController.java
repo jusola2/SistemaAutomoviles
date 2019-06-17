@@ -20,10 +20,14 @@ public class GlobalController {
         serverConnection = new ConnectionSQL(1);
     }
     
-    public void CommandAplicator(String command){
+    public void CommandAplicator(String command, String source){
         if(command.equals((String) "test")){
-            serverConnection.startConnectionTest();
+            serverConnection.startConnectionTest(source);
         }
+    }
+    
+    public void logIn(String email, String password){
+        serverConnection.logInInfo(email, password);
     }
     
     public ArrayList<String> users(){

@@ -9,12 +9,15 @@ package sistemaautomoviles;
  *
  * @author juanj
  */
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConnectionSQL {
     private Connection con;
@@ -24,7 +27,7 @@ public class ConnectionSQL {
         switch (idCreador) {
             case 1:
                 try{
-                    String connectionUrl = "jdbc:sqlserver://JUANJOSESOLANO;databaseName=Person;integratedSecurity=true";
+                    String connectionUrl = "jdbc:sqlserver://JUANJOSESOLANO;databaseName=Empresa;integratedSecurity=true";
                     con = DriverManager.getConnection(connectionUrl);
                     connectionState = true;
                 }catch(SQLException e){
@@ -77,16 +80,21 @@ public class ConnectionSQL {
     }
     
 
-    public void startConnectionTest(){        
+    public void startConnectionTest(String password){        
         try{
             Statement stmt = con.createStatement(); 
-            String SQL = "SELECT  * FROM Contact";
+            String SQL = "SELECT  * FROM UsuarioAplicacion";
             ResultSet rs = stmt.executeQuery(SQL);
-
+            boolean exist= false;
             // Iterate through the data in the result set and display it.
             while (rs.next()) {
-                System.out.println(rs.getString("FirstName") + " " + rs.getString("LastName"));
+                System.out.println(rs.getString("Contraseña"));
+                if(rs.getString("Contraseña") == null ? password == null : rs.getString("Contraseña").equals(password)){
+                    exist = true;
+                }
             }
+            System.out.println("sistemaautomoviles.ConnectionSQL.startConnectionTest()");
+            System.out.println(exist);
             //con.close();
             
         }
@@ -95,6 +103,21 @@ public class ConnectionSQL {
             e.printStackTrace();
         }
     }
+    
+    public void logInInfo(String email, String password){
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.getLogInId (?, ?, ?, ?)}");) {  
+        cstmt.setNString(1, email);
+        cstmt.setNString(2, password);
+        cstmt.registerOutParameter(3, java.sql.Types.INTEGER);  
+        cstmt.registerOutParameter(4, java.sql.Types.NVARCHAR);  
+        cstmt.execute();  
+        System.out.println("BD ID: " + cstmt.getInt(3));
+        System.out.println("BD Type: " + cstmt.getNString(4));  
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     
     public void closeConnection() throws SQLException{
         con.close();
