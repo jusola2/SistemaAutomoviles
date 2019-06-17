@@ -74,7 +74,17 @@ BEGIN
    execute [Fabrica].[dbo].[getIdModel] @Nombre, @IdModelo out
 END
 
+--======================================================================
 
+go
+CREATE PROCEDURE InsertTipoXModelo 
+	@Tipo int,
+	@Modelo int, 
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_TipoXModelo] null,@Tipo, @Modelo,1,@Resultado out
+END
 
 --=============================== Sucursal ======================================================================
 
