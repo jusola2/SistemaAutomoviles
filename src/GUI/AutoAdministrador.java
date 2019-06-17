@@ -4,23 +4,20 @@
  * and open the template in the editor.
  */
 package GUI;
-
 import Controller.GlobalController;
 import Logic.ControllerCompatible;
-
 /**
  *
- * @author juanj
+ * @author steph
  */
-public class VentanaAdministrador extends javax.swing.JFrame implements ControllerCompatible{
-
+public class AutoAdministrador extends javax.swing.JFrame {
     protected GlobalController controller;
+
     /**
-     * Creates new form VentanaAdministrador
+     * Creates new form AutoAdministrador
      */
-    public VentanaAdministrador() {
+    public AutoAdministrador() {
         initComponents();
-        controller = new GlobalController();
     }
 
     /**
@@ -33,27 +30,25 @@ public class VentanaAdministrador extends javax.swing.JFrame implements Controll
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        bntVentas = new javax.swing.JButton();
-        bntAutos = new javax.swing.JButton();
+        btnActualizarA = new javax.swing.JButton();
+        btnAgregarA = new javax.swing.JButton();
+        btnConsultarA = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Menú administrador");
+        jLabel1.setText("Menú Automóviles");
 
-        bntVentas.setText("Ventas");
-        bntVentas.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizarA.setText("Actualizar");
+        btnActualizarA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntVentasActionPerformed(evt);
+                btnActualizarAActionPerformed(evt);
             }
         });
 
-        bntAutos.setText("Automóviles");
-        bntAutos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntAutosActionPerformed(evt);
-            }
-        });
+        btnAgregarA.setText("Agregar");
+
+        btnConsultarA.setText("Consultar");
 
         jButton1.setText("Atrás");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -70,51 +65,46 @@ public class VentanaAdministrador extends javax.swing.JFrame implements Controll
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 147, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 126, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(bntAutos, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bntVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(159, 159, 159))
+                                    .addComponent(btnActualizarA, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnConsultarA, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnAgregarA, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(141, 141, 141))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(130, 130, 130))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(133, 133, 133))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(bntAutos, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(bntVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
+                .addComponent(btnAgregarA, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(btnConsultarA, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnActualizarA, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bntVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVentasActionPerformed
+    private void btnActualizarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarAActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_bntVentasActionPerformed
-
-    private void bntAutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAutosActionPerformed
-        AutoAdministrador AutoA = new AutoAdministrador();
-        AutoA.setVisible(true);
-        
-    }//GEN-LAST:event_bntAutosActionPerformed
+    }//GEN-LAST:event_btnActualizarAActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        LogIn l=new LogIn();
-
-        l.setVisible(true);
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -134,33 +124,29 @@ public class VentanaAdministrador extends javax.swing.JFrame implements Controll
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AutoAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AutoAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AutoAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AutoAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaAdministrador().setVisible(true);
+                new AutoAdministrador().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntAutos;
-    private javax.swing.JButton bntVentas;
+    private javax.swing.JButton btnActualizarA;
+    private javax.swing.JButton btnAgregarA;
+    private javax.swing.JButton btnConsultarA;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void setController(GlobalController Pcontroller){
-        controller = Pcontroller;
-    }
 }
