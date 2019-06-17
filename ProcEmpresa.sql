@@ -42,7 +42,13 @@ AS
 BEGIN  
    execute [Fabrica].[dbo].[CRUD_Caracteristica] null, null,null,4,null
 END
-
+--======================================================================
+go
+CREATE PROCEDURE getVehTypes    
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_TipoAuto] null,null,4,null
+END
 
 
 
