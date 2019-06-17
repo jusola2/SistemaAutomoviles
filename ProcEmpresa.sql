@@ -144,7 +144,7 @@ BEGIN
 
 END
 
-------------- Tipo Tarjeta
+/*------------- Tipo Tarjeta
 GO
 CREATE PROCEDURE CRUD_TarjetaCliente(@IdTipo int,@Tipo nvarchar(50),@Opc int,@Resultado int out)
 AS
@@ -199,12 +199,12 @@ BEGIN
 		set @Resultado = 0;
 	end catch
 
-END
+END*/
 
 -------------- Cliente
 GO
 CREATE PROCEDURE CRUD_Cliente (@IdCliente int,@Nombre nvarchar(50),@Apellido nvarchar(50),@Correo nvarchar(120),
-@TipoT nvarchar(50), @Provincia nvarchar(50),@Distrito nvarchar(50), @Sucursal int, @Opc int,@Resultado int out)
+@Cedula int, @FechaNac date, @Provincia nvarchar(50),@Distrito nvarchar(50), @Sucursal int, @Opc int,@Resultado int out)
 AS
 BEGIN 
 	begin try
@@ -214,12 +214,10 @@ BEGIN
 		BEGIN 
 			begin try
 				begin tran 
-					Declare @Tarjeta int
-					set @Tarjeta=(select IdTipoTarjeta FROM TipoTarjetaCliente  where Tipo=@TipoT)
 					Declare @Direccion int
 					set @Direccion=(select IdDireccion FROM DireccionCliente  where IdDireccion=@IdCliente)
 					Insert Into Cliente 
-					Values  (@Nombre,@Apellido,@Correo,@Tarjeta,@Direccion,@Sucursal);
+					Values  (@Nombre,@Apellido,@Correo,@Cedula,@FechaNac,GETDATE(),@Direccion,@Sucursal);
 				commit 
 			end try
 			begin catch
@@ -255,9 +253,8 @@ BEGIN
 		END
 		IF @Opc = 4
 		BEGIN
-			Select C.IdCliente, C.Nombre, C.Apellido, T.Tipo, D.Provincia, D.Distrito,T.Tipo, S.NombreS
+			Select C.IdCliente, C.Nombre, C.Apellido, D.Provincia, D.Distrito, S.NombreS
 			From Cliente C
-			inner join TipoTarjetaCliente T on C.IdTarjeta=T.IdTipoTarjeta
 			inner join DireccionCliente D on C.IdDireccion=D.IdDireccion
 			inner join Sucursal S on C.IdSucursal=S.IdSucursal 
 		END
