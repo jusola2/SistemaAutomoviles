@@ -10,7 +10,8 @@ BEGIN
 END
 
 --select * from ModeloAutomovil
-select * from TipoXModelo
+--select * from TipoXModelo
+--select * from TipoAuto
 --=============================== Tipo Combustible ======================================================================
 
 -- Combustible Auto	1
@@ -186,23 +187,25 @@ BEGIN
 END
 
 -- TipoXModelo
+
+
 GO
 CREATE PROCEDURE CRUD_TipoXModelo (@IdTipoXModelo int,@Tipo int,@Modelo int, @Opc int,@Resultado int out)
 AS
 BEGIN 
 	begin try
-		set @Resultado = 1;
+		set @Resultado = 1
 		IF @Opc = 1
 		BEGIN 
 			begin try
 				begin tran 
 					Insert Into TipoXModelo
-					Values  (@Tipo,@Modelo);
+					Values  (@Tipo,@Modelo)
 				commit 
 			end try
 			begin catch
 				rollback 
-				set @Resultado = 0;
+				set @Resultado = 0
 			end catch
 		END
 		IF @Opc = 2
@@ -215,7 +218,7 @@ BEGIN
 			end try
 			begin catch
 				rollback 
-				set @Resultado = 0;
+				set @Resultado = 0
 			end catch
 		END
 		IF @Opc = 3
@@ -227,7 +230,7 @@ BEGIN
 			end try
 			begin catch
 				rollback
-				set @Resultado = 0;
+				set @Resultado = 0
 			end catch
 		END
 		IF @Opc = 4
@@ -240,7 +243,7 @@ BEGIN
 		END
 	end try
 	begin catch
-		set @Resultado = 0;
+		set @Resultado = 0
 	end catch
 END
 

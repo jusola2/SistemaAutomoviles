@@ -213,6 +213,7 @@ public class ConnectionSQL {
             System.out.println("sistemaautomoviles.ConnectionSQL.nuevoModelo()");
             System.out.println("id del modelo "+idModelo); 
             for(TipoModelo tipo:nuevoModelo.getTipos()){
+                System.out.println(tipo.getId());
                 insertarTipoDeModelo(idModelo, tipo.getId());
             }
         }
@@ -238,8 +239,8 @@ public class ConnectionSQL {
     public void insertarTipoDeModelo(int idModelo,int idTipo){
         boolean resultado = false;
         try(CallableStatement cstmt = con.prepareCall("{call dbo.InsertTipoXModelo  (?, ?, ?)}");) {  
-        cstmt.setInt(1, idModelo);
-        cstmt.setInt(2, idTipo);
+        cstmt.setInt(1, idTipo);
+        cstmt.setInt(2, idModelo);
         cstmt.registerOutParameter(3, java.sql.Types.INTEGER);  
         cstmt.execute();
             System.out.println(cstmt.getInt(3));
