@@ -85,6 +85,28 @@ AS
 BEGIN  
    execute [Fabrica].[dbo].[CRUD_TipoXModelo] null,@Tipo, @Modelo,1,@Resultado out
 END
+--======================================================================
+
+go
+CREATE PROCEDURE InsertCombXModelo 
+	@TipoCom int,
+	@Modelo int, 
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_CombustibleXModelo] null,@TipoCom, @Modelo,1,@Resultado out
+END
+--======================================================================
+
+go
+CREATE PROCEDURE InsertCaractXModelo 
+	@TipoCarc int,
+	@Modelo int, 
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_CaractXModelo] null,@TipoCarc, @Modelo,1,@Resultado out
+END
 
 --=============================== Sucursal ======================================================================
 

@@ -9,9 +9,7 @@ BEGIN
 	where ma.NombreModelo = @Nombre
 END
 
---select * from ModeloAutomovil
---select * from TipoXModelo
---select * from TipoAuto
+
 --=============================== Tipo Combustible ======================================================================
 
 -- Combustible Auto	1

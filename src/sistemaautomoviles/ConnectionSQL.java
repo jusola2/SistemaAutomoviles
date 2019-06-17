@@ -216,6 +216,12 @@ public class ConnectionSQL {
                 System.out.println(tipo.getId());
                 insertarTipoDeModelo(idModelo, tipo.getId());
             }
+            for(Caracteristica carac:nuevoModelo.getCaracteristicas()){
+                insertarCaracteristicaDeModelo(idModelo,carac.getId());
+            }
+            for(Combustible combustible:nuevoModelo.getCombustibles()){
+                insertarCombusDeModelo(idModelo,combustible.getId());
+            }
         }
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
@@ -244,13 +250,35 @@ public class ConnectionSQL {
         cstmt.registerOutParameter(3, java.sql.Types.INTEGER);  
         cstmt.execute();
             System.out.println(cstmt.getInt(3));
-        /*if(cstmt.getInt(3)!=1){
-            resultado=true;
-        }*/
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //return resultado;
+    }
+    
+    public void insertarCaracteristicaDeModelo(int idModelo,int idCarac){
+        boolean resultado = false;
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.InsertCaractXModelo (?, ?, ?)}");) {  
+        cstmt.setInt(1, idCarac);
+        cstmt.setInt(2, idModelo);
+        cstmt.registerOutParameter(3, java.sql.Types.INTEGER);  
+        cstmt.execute();
+            System.out.println(cstmt.getInt(3));
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void insertarCombusDeModelo(int idModelo,int idCombus){
+        boolean resultado = false;
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.InsertCombXModelo (?, ?, ?)}");) {  
+        cstmt.setInt(1, idCombus);
+        cstmt.setInt(2, idModelo);
+        cstmt.registerOutParameter(3, java.sql.Types.INTEGER);  
+        cstmt.execute();
+            System.out.println(cstmt.getInt(3));
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
