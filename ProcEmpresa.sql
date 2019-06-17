@@ -270,8 +270,6 @@ END
 
 
 --============================ Empleado ==========================================
-_Empleado (@IdEmpleado int, @TipoEmpleado int,
-@Nombre nvarchar(50),@Apellido nvarchar(50), @FechaIngreso date, @Opc int,@Resultado int out)
 
 go
 CREATE PROCEDURE InsertEmpleado
@@ -293,6 +291,114 @@ BEGIN
 END
 
 
+--======================================================================================================================
+--                                       SP Empresa
+--======================================================================================================================
+
+--============================ Sucursal ==========================================
+
+go
+CREATE PROCEDURE InsertSucursal
+	@NombreS nvarchar(50),
+	@HoraAbertura int,
+	@HoraCierre int,
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Sucursal] null,@NombreS, @HoraAbertura, @HoraCierre, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getSucursal    
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Sucursal] null,null, null, null, 4,null
+END
+
+--============================ Direccion Cliente ==========================================
+go
+CREATE PROCEDURE InsertDireccion
+	@Provincia nvarchar(50),
+	@Distrito nvarchar(50),
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Direccion] null,@Provincia, @Distrito, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getDireccion   
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Direccion] null,null, null, 4,null
+END
+
+--============================ Cliente ==========================================
+go
+CREATE PROCEDURE InsertCliente
+	@Nombre nvarchar(50),
+	@Apellido nvarchar(50),
+	@Correo nvarchar(120),
+	@Cedula int, 
+	@FechaNac date, 
+	@Provincia nvarchar(50),
+	@Distrito nvarchar(50), 
+	@Sucursal int,
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Cliente] null,@Nombre,@Apellido, @Correo ,@Cedula ,@FechaNac ,@Provincia ,@Distrito ,@Sucursal, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getCliente   
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Cliente] null,null,null,null,null,null,null,null, null, 4,null
+END
+
+ CRUD_TipoEmpleado(@IdTipo int,@Detalle nvarchar(120),@Opc int,@Resultado int out)
+
+ --============================ TipoEmpleado ==========================================
+go
+CREATE PROCEDURE InsertTipoEmpleado
+	@Detalle nvarchar(120),
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_TipoEmpleado] null,@Detalle, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getTipoEmpleado   
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_TipoEmpleado] null,null, 4,null
+END
+
+
+ --============================ TipoEmpleado ==========================================
+
+go
+CREATE PROCEDURE InsertEmpleado
+	@Nombre nvarchar(50),
+	@Apellido nvarchar(50), 
+	@FechaIngreso date,
+	@NombreTipo nvarchar(50),
+	@TipoEmp int, 
+	@Sucursal int,
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_TipoEmpleado] null,@Nombre, @Apellido, @FechaIngreso, @NombreTipo, @TipoEmp ,@Sucursal, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getEmpleado   
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Empleado] null,null,null,null,null,null,null, 4,null
+END
 
 --=============================== Sucursal ======================================================================
 
