@@ -201,7 +201,7 @@ public class ConnectionSQL {
     }
 
     public boolean nuevoModelo(ModeloVehiculo nuevoModelo) {
-        boolean resultado = false;
+        boolean resultado = true;
         try(CallableStatement cstmt = con.prepareCall("{call dbo.IngresarModelo  (?, ?, ?, ?)}");) {  
         cstmt.setNString(1, nuevoModelo.getName());
         cstmt.setInt(2, nuevoModelo.getAnoo());
@@ -209,6 +209,44 @@ public class ConnectionSQL {
         cstmt.registerOutParameter(4, java.sql.Types.INTEGER);  
         cstmt.execute();
         if(cstmt.getInt(4)!=0){
+            int idModelo = getModelID(nuevoModelo.getName());
+            //System.out.println("id del modelo "+idModelo); 
+            for(TipoModelo tipo:nuevoModelo.getTipos()){
+                if(insertarTipoDeModelo(idModelo,tipo.getId())){
+                    resultado=true;
+                }else{
+                    resultado=false;
+                    break;
+                }
+            }
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultado;
+    }
+    
+    public int getModelID(String NombreModelo){
+        int idModelo = 0;
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.getModelIdByName  (?, ?)}");) {  
+        cstmt.setNString(1, NombreModelo);
+        cstmt.registerOutParameter(2, java.sql.Types.INTEGER);  
+        cstmt.execute();
+        idModelo=cstmt.getInt(2);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return idModelo;
+    }
+    
+    public boolean insertarTipoDeModelo(int idModelo,int idTipo){
+        boolean resultado = false;
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.InsertTipoXModelo  (?, ?, ?)}");) {  
+        cstmt.setInt(1, idModelo);
+        cstmt.setInt(2, idTipo);
+        cstmt.registerOutParameter(3, java.sql.Types.INTEGER);  
+        cstmt.execute();
+        if(cstmt.getInt(3)==1){
             resultado=true;
         }
         } catch (SQLException ex) {
@@ -216,4 +254,5 @@ public class ConnectionSQL {
         }
         return resultado;
     }
+
 }
