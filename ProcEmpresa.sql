@@ -81,90 +81,181 @@ END
 
 ----------------- Dirección
 GO
-CREATE PROCEDURE CRUD_Direccion(@IdDireccion int,@Provincia nvarchar(50),@Distrito nvarchar(50),@Opc int)
+CREATE PROCEDURE CRUD_Direccion(@IdDireccion int,@Provincia nvarchar(50),@Distrito nvarchar(50),@Opc int,@Resultado int out)
 AS
 BEGIN
-	IF @Opc = 1
-	BEGIN 
-		Insert Into DireccionCliente 
-		Values  (@Provincia,@Distrito);
-	END
-	IF @Opc = 2
-	BEGIN
-		Update DireccionCliente  Set Provincia=isnull(Provincia,@Provincia), Distrito=isnull(Distrito,@Distrito)
-		where IdDireccion=@IdDireccion
-	END
-	IF @Opc = 3
-	BEGIN
-		Delete from DireccionCliente  where IdDireccion=@IdDireccion
-	END
-	IF @Opc = 4
-	BEGIN
-		Select IdDireccion, Provincia, Distrito from DireccionCliente
-	END
+	begin try
+		set @Resultado = 1;
+		IF @Opc = 1
+		BEGIN 
+			begin try
+				begin tran 
+					Insert Into DireccionCliente 
+					Values  (@Provincia,@Distrito);
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 2
+		BEGIN
+			begin try
+				begin tran 
+					Update DireccionCliente  Set Provincia=isnull(Provincia,@Provincia), Distrito=isnull(Distrito,@Distrito)
+					where IdDireccion=@IdDireccion
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 3
+		BEGIN
+			begin try
+				begin tran
+					Delete from DireccionCliente  where IdDireccion=@IdDireccion
+				commit 
+			end try
+			begin catch
+				rollback
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 4
+		BEGIN
+			Select IdDireccion, Provincia, Distrito from DireccionCliente where IdDireccion = isnull(@IdDireccion,IdDireccion)	
+		END
+	end try
+	begin catch
+		set @Resultado = 0;
+	end catch
+
 END
 
 ------------- Tipo Tarjeta
 GO
-CREATE PROCEDURE CRUD_TarjetaCliente(@IdTipo int,@Tipo nvarchar(50),@Opc int)
+CREATE PROCEDURE CRUD_TarjetaCliente(@IdTipo int,@Tipo nvarchar(50),@Opc int,@Resultado int out)
 AS
 BEGIN
-	IF @Opc = 1
-	BEGIN 
-		Insert Into TipoTarjetaCliente 
-		Values  (@Tipo);
-	END
-	IF @Opc = 2
-	BEGIN
-		Update TipoTarjetaCliente Set Tipo=isnull(Tipo,@Tipo)
-		where IdTipoTarjeta=@IdTipo
-	END
-	IF @Opc = 3
-	BEGIN
-		Delete from TipoTarjetaCliente where IdTipoTarjeta=@IdTipo
-	END
-	IF @Opc = 4
-	BEGIN
-		Select IdTipoTarjeta, Tipo from TipoTarjetaCliente
-	END
+	begin try
+		set @Resultado = 1;
+		IF @Opc = 1
+		BEGIN 
+			begin try
+				begin tran 
+					Insert Into TipoTarjetaCliente 
+		            Values  (@Tipo);
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 2
+		BEGIN
+			begin try
+				begin tran 
+					Update TipoTarjetaCliente Set Tipo=isnull(Tipo,@Tipo)
+					where IdTipoTarjeta=@IdTipo
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 3
+		BEGIN
+			begin try
+				begin tran
+					Delete from TipoTarjetaCliente where IdTipoTarjeta=@IdTipo
+				commit 
+			end try
+			begin catch
+				rollback
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 4
+		BEGIN
+			Select IdTipoTarjeta, Tipo from TipoTarjetaCliente
+			where IdTipoTarjeta = ISNULL(@IdTipo,IdTipoTarjeta) 
+		END
+	end try
+	begin catch
+		set @Resultado = 0;
+	end catch
+
 END
 
 -------------- Cliente
 GO
 CREATE PROCEDURE CRUD_Cliente (@IdCliente int,@Nombre nvarchar(50),@Apellido nvarchar(50),@Correo nvarchar(120),
-@TipoT nvarchar(50), @Provincia nvarchar(50),@Distrito nvarchar(50), @Sucursal int, @Opc int)
+@TipoT nvarchar(50), @Provincia nvarchar(50),@Distrito nvarchar(50), @Sucursal int, @Opc int,@Resultado int out)
 AS
 BEGIN 
-	
-	EXEC CRUD_Direccion @IdCliente,@Provincia,@Distrito,@Opc
-
-	IF @Opc = 1
-	BEGIN 
-	    Declare @Tarjeta int
-		set @Tarjeta=(select IdTipoTarjeta FROM TipoTarjetaCliente  where Tipo=@TipoT)
-		Declare @Direccion int
-		set @Direccion=(select IdDireccion FROM DireccionCliente  where IdDireccion=@IdCliente)
-		Insert Into Cliente 
-		Values  (@Nombre,@Apellido,@Correo,@Tarjeta,@Direccion,@Sucursal);
-	END
-	IF @Opc = 2
-	BEGIN
-		Update Cliente Set Nombre=isnull(Nombre,@Nombre),Apellido =isnull(Apellido,@Apellido),
-		Correo= isnull(Correo, @Correo)
-		where IdCliente=@IdCliente
-	END
-	IF @Opc = 3
-	BEGIN
-		Delete from Cliente where IdCliente=@IdCliente
-	END
-	IF @Opc = 4
-	BEGIN
-		Select C.IdCliente, C.Nombre, C.Apellido, T.Tipo, D.Provincia, D.Distrito,T.Tipo, S.NombreS
-		From Cliente C
-		inner join TipoTarjetaCliente T on C.IdTarjeta=T.IdTipoTarjeta
-		inner join DireccionCliente D on C.IdDireccion=D.IdDireccion
-		inner join Sucursal S on C.IdSucursal=S.IdSucursal
-	END
+	begin try
+		set @Resultado = 1;
+		EXEC CRUD_Direccion @IdCliente,@Provincia,@Distrito,@Opc,@Resultado
+		IF @Opc = 1
+		BEGIN 
+			begin try
+				begin tran 
+					Declare @Tarjeta int
+					set @Tarjeta=(select IdTipoTarjeta FROM TipoTarjetaCliente  where Tipo=@TipoT)
+					Declare @Direccion int
+					set @Direccion=(select IdDireccion FROM DireccionCliente  where IdDireccion=@IdCliente)
+					Insert Into Cliente 
+					Values  (@Nombre,@Apellido,@Correo,@Tarjeta,@Direccion,@Sucursal);
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 2
+		BEGIN
+			begin try
+				begin tran 
+					Update Cliente Set Nombre=isnull(Nombre,@Nombre),Apellido =isnull(Apellido,@Apellido),
+					Correo= isnull(Correo, @Correo)
+					where IdCliente=@IdCliente
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 3
+		BEGIN
+			begin try
+				begin tran
+					Delete from Cliente where IdCliente=@IdCliente
+				commit 
+			end try
+			begin catch
+				rollback
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 4
+		BEGIN
+			Select C.IdCliente, C.Nombre, C.Apellido, T.Tipo, D.Provincia, D.Distrito,T.Tipo, S.NombreS
+			From Cliente C
+			inner join TipoTarjetaCliente T on C.IdTarjeta=T.IdTipoTarjeta
+			inner join DireccionCliente D on C.IdDireccion=D.IdDireccion
+			inner join Sucursal S on C.IdSucursal=S.IdSucursal 
+		END
+	end try
+	begin catch
+		set @Resultado = 0;
+	end catch
 END
 
 
@@ -172,61 +263,121 @@ END
 
 ------------- Tipo Empleado
 GO
-CREATE PROCEDURE CRUD_TipoEmpleado(@IdTipo int,@Detalle nvarchar(120),@Opc int)
+CREATE PROCEDURE CRUD_TipoEmpleado(@IdTipo int,@Detalle nvarchar(120),@Opc int,@Resultado int out)
 AS
 BEGIN
-	IF @Opc = 1
-	BEGIN 
-		Insert Into TipoEmpleadoSucursal
-		Values  (@Detalle);
-	END
-	IF @Opc = 2
-	BEGIN
-		Update TipoEmpleadoSucursal Set Detalle=isnull(Detalle,@Detalle)
-		where IdTipoEmpleado=@IdTipo
-	END
-	IF @Opc = 3
-	BEGIN
-		Delete from TipoEmpleadoSucursal where IdTipoEmpleado=@IdTipo
-	END
-	IF @Opc = 4
-	BEGIN
-		Select IdTipoEmpleado, Detalle from TipoEmpleadoSucursal
-	END
+	begin try
+		set @Resultado = 1;
+		IF @Opc = 1
+		BEGIN 
+			begin try
+				begin tran 
+					Insert Into TipoEmpleadoSucursal
+					Values  (@Detalle);
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 2
+		BEGIN
+			begin try
+				begin tran 
+					Update TipoEmpleadoSucursal Set Detalle=isnull(Detalle,@Detalle)
+					where IdTipoEmpleado=@IdTipo
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 3
+		BEGIN
+			begin try
+				begin tran
+					Delete from TipoEmpleadoSucursal where IdTipoEmpleado=@IdTipo
+				commit 
+			end try
+			begin catch
+				rollback
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 4
+		BEGIN
+			Select IdTipoEmpleado, Detalle from TipoEmpleadoSucursal
+			where IdTipoEmpleado = ISNULL(@IdTipo,IdTipoEmpleado) 
+		END
+	end try
+	begin catch
+		set @Resultado = 0;
+	end catch
 END
 
 --------------	Empleado
 GO
 CREATE PROCEDURE CRUD_Empleado (@IdEmpleado int,@Nombre nvarchar(50),@Apellido nvarchar(50), 
-@FechaIngreso date,@NombreTipo nvarchar(50),@TipoEmp int, @Sucursal int, @Opc int)
+@FechaIngreso date,@NombreTipo nvarchar(50),@TipoEmp int, @Sucursal int, @Opc int,@Resultado int out)
 AS
 BEGIN 
-	
-	IF @Opc = 1
-	BEGIN 
-		Insert Into Empleado
-		Values  (@Nombre,@Apellido,@FechaIngreso,@TipoEmp, @Sucursal);
-	END
-	IF @Opc = 2
-	BEGIN
-		Update Empleado Set Nombre=isnull(Nombre,@Nombre),Apellido =isnull(Apellido,@Apellido),
-		FechaIngreso=isnull(FechaIngreso,@FechaIngreso), IdTipoEmpleado= isnull(IdTipoEmpleado,@TipoEmp),
-		IdSucursal=ISNULL(IdSucursal,@Sucursal)
-		where IdEmpleado=@IdEmpleado
-	END
-	IF @Opc = 3
-	BEGIN
-		Delete from Empleado where IdEmpleado=@IdEmpleado
-	END
-	IF @Opc = 4
-	BEGIN
-		Select E.IdEmpleado, E.Nombre, E.Apellido, T.Detalle TipoEmpleado,
-		S.NombreS NombreSucursal
-		From Empleado E
-		inner join TipoEmpleadoSucursal T on E.IdTipoEmpleado=T.IdTipoEmpleado
-		inner join Sucursal S on E.IdSucursal = S.IdSucursal
-		
-	END
+
+begin try
+		set @Resultado = 1;
+		IF @Opc = 1
+		BEGIN 
+			begin try
+				begin tran 
+					Insert Into Empleado
+					Values  (@Nombre,@Apellido,@FechaIngreso,@TipoEmp, @Sucursal);
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 2
+		BEGIN
+			begin try
+				begin tran 
+					Update Empleado Set Nombre=isnull(Nombre,@Nombre),Apellido =isnull(Apellido,@Apellido),
+					FechaIngreso=isnull(FechaIngreso,@FechaIngreso), IdTipoEmpleado= isnull(IdTipoEmpleado,@TipoEmp),
+					IdSucursal=ISNULL(IdSucursal,@Sucursal)
+					where IdEmpleado=@IdEmpleado
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 3
+		BEGIN
+			begin try
+				begin tran
+					Delete from Empleado where IdEmpleado=@IdEmpleado
+				commit 
+			end try
+			begin catch
+				rollback
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 4
+		BEGIN
+			Select E.IdEmpleado, E.Nombre, E.Apellido, T.Detalle TipoEmpleado,
+			S.NombreS NombreSucursal
+			From Empleado E
+			inner join TipoEmpleadoSucursal T on E.IdTipoEmpleado=T.IdTipoEmpleado
+			inner join Sucursal S on E.IdSucursal = S.IdSucursal 
+		END
+	end try
+	begin catch
+		set @Resultado = 0;
+	end catch
 END
 
 --=============================== Inventario ======================================================================
