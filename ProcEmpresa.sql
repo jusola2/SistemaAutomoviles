@@ -13,8 +13,17 @@ BEGIN
    FROM UsuarioAplicacion ua inner join TipoUsuario tp on ua.IdTipoUsuario=tp.Id
    WHERE ua.Email = @email and @contraseña = ua.Contraseña 
 END
-
-
+--======================================================================
+go
+CREATE PROCEDURE getEmployeeType    
+   @IdEmployee int,
+   @Type nvarchar(max) OUTPUT 
+AS  
+BEGIN  
+   SELECT @Type = ISNULL(te.Detalle,'Ninguno')
+   FROM Empleado e inner join TipoEmpleadoSucursal te on e.IdTipoEmpleado=te.IdTipoEmpleado
+   WHERE e.IdEmpleado = @IdEmployee 
+END
 
 
 --=============================== Sucursal ======================================================================
