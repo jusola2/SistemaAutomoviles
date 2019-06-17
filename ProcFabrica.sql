@@ -349,12 +349,10 @@ BEGIN
 		END
 		IF @Opc = 4
 		BEGIN
-			Select IM.IdImgXModelo, I.Imagen, M.NombreModelo, M.AnnoModelo, M.PrecioBase, 
-			C.Detalle TipoCombustible
+			Select IM.IdImgXModelo, I.Imagen, M.NombreModelo, M.AnnoModelo, M.PrecioBase
 			From ImagenXModelo IM
 			inner join Imagen I on I.IdImagen= IM.IdImagen
 			inner join ModeloAutomovil M on M.IdModeloAutomovil=IM.IdModelo
-			inner join TipoCombustible C on C.IdTipoCombus= M.IdCombustible	
 			Where IdImgXModelo=isnull(@IdImagenXModelo,IdImgXModelo)
 		END
 	end try
@@ -469,12 +467,10 @@ BEGIN
 		IF @Opc = 4
 		BEGIN
 			Select CM.IdCarectXModelo, CA.Detalle Caracteristica, CA.PrecioBase PrecioCaracteristica,
-			M.NombreModelo, M.AnnoModelo, M.PrecioBase PrecioModelo, 
-			C.Detalle TipoCombustible
+			M.NombreModelo, M.AnnoModelo, M.PrecioBase PrecioModelo
 			From CaracteristicaXModelo CM
 			inner join Caracteristica CA on CA.IdCarect= CM.IdCarect
 			inner join ModeloAutomovil M on M.IdModeloAutomovil=CM.IdModelo
-			inner join TipoCombustible C on C.IdTipoCombus= M.IdCombustible
 			Where IdCarectXModelo=isnull(@IdCaractXModelo,IdCarectXModelo)
 		END
 	end try
@@ -794,7 +790,7 @@ BEGIN
 		IF @Opc = 4
 		BEGIN
 			Select CM.Id, TC.Detalle TipoCombustible,
-			M.NombreModelo, M.AnnoModelo, M.PrecioBase PrecioModelo, TA.Detalle TipoAutomovil 
+			M.NombreModelo, M.AnnoModelo, M.PrecioBase PrecioModelo
 			From CombustibleXModelo CM
 			inner join TipoCombustible TC on TC.IdTipoCombus= CM.IdTipoCombus
 			inner join ModeloAutomovil M on M.IdModeloAutomovil=CM.IdModelo
