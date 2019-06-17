@@ -44,7 +44,6 @@
                           <Component id="Log" max="32767" attributes="0"/>
                           <Component id="jTextField1" max="32767" attributes="0"/>
                           <Component id="password" alignment="0" max="32767" attributes="0"/>
-                          <Component id="password1" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -68,10 +67,8 @@
                   <Component id="password" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="password1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="Log" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
+              <EmptySpace pref="67" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -106,8 +103,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="password">
-    </Component>
-    <Component class="javax.swing.JTextField" name="password1">
     </Component>
   </SubComponents>
 </Form>

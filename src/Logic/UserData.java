@@ -11,4 +11,14 @@ package Logic;
  */
 public class UserData {
     
+   private int BDId;
+   private String UserType;
+
+    public UserData(int BDId, String UserType) {
+        this.BDId = BDId;
+        this.UserType = UserType;
+    }
+   
+   
+    
 }
