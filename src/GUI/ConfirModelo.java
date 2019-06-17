@@ -154,6 +154,7 @@ public class ConfirModelo extends javax.swing.JFrame {
     private void loadList(ModeloVehiculo modelo){
         modal.addElement("Nombre Modelo \n"+modelo.getName());
         modal.addElement("Año del Modelo \n"+modelo.getAnoo());
+        modal.addElement("Precio Base \n"+modelo.getPreciobase());
         String gasolinas="";
         for(Combustible com: modelo.getCombustibles()){
             gasolinas+=com.getTipo()+",";

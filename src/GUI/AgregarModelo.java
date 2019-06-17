@@ -127,6 +127,11 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
         jLabel3.setText("Tipoos: ");
 
         addType.setText("Agregar");
+        addType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTypeActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("$");
 
@@ -268,6 +273,11 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
         confirmacion.setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    private void addTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTypeActionPerformed
+        // TODO add your handling code here:
+        nuevoModelo.addTipo(tiposList.get(tTipos.getSelectedIndex()));
+    }//GEN-LAST:event_addTypeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -362,6 +372,6 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
     }
     
     public void confirmacionCreacion(){
-        boolean resultado = controller.insertarModelo(nuevoModelo);
+        System.out.println(controller.insertarModelo(nuevoModelo));
     }
 }
