@@ -6,13 +6,14 @@
 package GUI;
 import Controller.GlobalController;
 import Logic.ControllerCompatible;
+import javax.swing.JFrame;
 /**
  *
  * @author steph
  */
-public class AutoAdministrador extends javax.swing.JFrame {
+public class AutoAdministrador extends javax.swing.JFrame implements ControllerCompatible{
     protected GlobalController controller;
-
+    private JFrame anterior;
     /**
      * Creates new form AutoAdministrador
      */
@@ -47,6 +48,11 @@ public class AutoAdministrador extends javax.swing.JFrame {
         });
 
         btnAgregarA.setText("Agregar");
+        btnAgregarA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarAActionPerformed(evt);
+            }
+        });
 
         btnConsultarA.setText("Consultar");
 
@@ -104,8 +110,17 @@ public class AutoAdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarAActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        anterior.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnAgregarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAActionPerformed
+        AgregarAutos w = new AgregarAutos();
+        w.setController(controller);
+        w.ventanaAnterior(this);
+        w.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnAgregarAActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,4 +164,14 @@ public class AutoAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setController(GlobalController Pcontroller) {
+        controller=Pcontroller;
+    }
+
+    @Override
+    public void ventanaAnterior(JFrame ventana) {
+        anterior = ventana;
+    }
 }

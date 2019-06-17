@@ -7,6 +7,7 @@ package GUI;
 
 import Controller.GlobalController;
 import Logic.ControllerCompatible;
+import javax.swing.JFrame;
 
 /**
  *
@@ -15,6 +16,7 @@ import Logic.ControllerCompatible;
 public class VentanaAdministrador extends javax.swing.JFrame implements ControllerCompatible{
 
     protected GlobalController controller;
+    private JFrame anterior;
     /**
      * Creates new form VentanaAdministrador
      */
@@ -107,14 +109,15 @@ public class VentanaAdministrador extends javax.swing.JFrame implements Controll
 
     private void bntAutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAutosActionPerformed
         AutoAdministrador AutoA = new AutoAdministrador();
+        AutoA.setController(controller);
+        AutoA.ventanaAnterior(this);
         AutoA.setVisible(true);
-        
+        this.setVisible(false);
     }//GEN-LAST:event_bntAutosActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        LogIn l=new LogIn();
-
-        l.setVisible(true);
+        anterior.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -162,5 +165,10 @@ public class VentanaAdministrador extends javax.swing.JFrame implements Controll
     @Override
     public void setController(GlobalController Pcontroller){
         controller = Pcontroller;
+    }
+
+    @Override
+    public void ventanaAnterior(JFrame ventana) {
+        anterior = ventana;
     }
 }
