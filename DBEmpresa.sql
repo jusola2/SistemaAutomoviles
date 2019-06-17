@@ -55,4 +55,3 @@ create table UsuarioAplicacion(
 	IdTipoUsuario int foreign KEY REFERENCES TipoUsuario(Id),
 	IdEnBase int NOT NULL
 );
--

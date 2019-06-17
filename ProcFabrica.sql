@@ -11,7 +11,7 @@ END
 
 --=============================== Tipo Combustible ======================================================================
 
--- Combustible Auto
+-- Combustible Auto	1
 GO
 CREATE PROCEDURE CRUD_TipoCombistible (@IdTipo int,@Detalle nvarchar(50), @Opc int,@Resultado int out)
 AS
@@ -230,12 +230,10 @@ BEGIN
 		END
 		IF @Opc = 4
 		BEGIN
-			Select TM.IdTipoXModelo,T.Detalle TipoAuto, M.NombreModelo, M.AnnoModelo, M.PrecioBase, 
-			C.Detalle TipoCombustible
+			Select TM.IdTipoXModelo,T.Detalle TipoAuto, M.NombreModelo, M.AnnoModelo, M.PrecioBase
 			From TipoXModelo TM
 			inner join TipoAuto T on T.IdTipoAuto= TM.IdTipoAuto
 			inner join ModeloAutomovil M on M.IdModeloAutomovil=TM.IdModelo
-			inner join TipoCombustible C on C.IdTipoCombus= M.IdCombustible	
 			Where IdTipoXModelo=isnull(@IdTipoXModelo,IdTipoXModelo)
 		END
 	end try
