@@ -41,7 +41,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements Controll
 
         jLabel1.setText("Menú administrador");
 
-        bntVentas.setText("Ventas");
+        bntVentas.setText("Controlador");
         bntVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntVentasActionPerformed(evt);

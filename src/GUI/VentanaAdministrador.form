@@ -74,7 +74,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="bntVentas">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ventas"/>
+        <Property name="text" type="java.lang.String" value="Controlador"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntVentasActionPerformed"/>
