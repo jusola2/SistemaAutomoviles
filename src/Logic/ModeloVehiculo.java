@@ -19,7 +19,7 @@ public class ModeloVehiculo {
     
     private String name;
     private int anoo;
-    private double preciobase;
+    private int preciobase;
 
     public ModeloVehiculo() {
         combustibles = new ArrayList<>();
@@ -89,7 +89,7 @@ public class ModeloVehiculo {
         return preciobase;
     }
 
-    public void setPreciobase(double preciobase) {
+    public void setPreciobase(int preciobase) {
         this.preciobase = preciobase;
     }
     

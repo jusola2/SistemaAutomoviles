@@ -262,7 +262,7 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         nuevoModelo.setName(nombre.getText());
-        
+        nuevoModelo.setPreciobase(Integer.valueOf(txtPrecio.getText()));
         ConfirModelo confirmacion = new ConfirModelo();
         confirmacion.setWindow(this, nuevoModelo);
         confirmacion.setVisible(true);
@@ -362,7 +362,6 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
     }
     
     public void confirmacionCreacion(){
-        System.out.println("GUI.AgregarModelo.confirmacionCreacion()");
-        System.out.println("se va a meter en la BD");
+        boolean resultado = controller.insertarModelo(nuevoModelo);
     }
 }

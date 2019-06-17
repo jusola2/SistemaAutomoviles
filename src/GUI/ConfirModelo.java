@@ -5,8 +5,10 @@
  */
 package GUI;
 
+import Logic.Caracteristica;
 import Logic.Combustible;
 import Logic.ModeloVehiculo;
+import Logic.TipoModelo;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 
@@ -156,7 +158,17 @@ public class ConfirModelo extends javax.swing.JFrame {
         for(Combustible com: modelo.getCombustibles()){
             gasolinas+=com.getTipo()+",";
         }
-        modal.addElement("Combustibles compatibles: \n"+gasolinas);
+        modal.addElement("Combustibles disponibles: \n"+gasolinas);
+        String caracteristicas="";
+        for(Caracteristica car: modelo.getCaracteristicas()){
+            caracteristicas+=car.getDetalle()+",";
+        }
+        modal.addElement("Caracteristicas disponibles: \n"+caracteristicas);
+        String Tipos="";
+        for(TipoModelo tm: modelo.getTipos()){
+            Tipos+=tm.getType()+",";
+        }
+        modal.addElement("Tipos disponible: \n"+Tipos);
     }
     
     public void setWindow(AgregarModelo window, ModeloVehiculo modelo){
