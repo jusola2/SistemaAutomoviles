@@ -25,6 +25,15 @@ BEGIN
    WHERE e.IdEmpleado = @IdEmployee 
 END
 
+--======================================================================
+go
+CREATE PROCEDURE getCombusType    
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_TipoCombistible] null, null,4,null
+END
+
+
 
 --=============================== Sucursal ======================================================================
 
