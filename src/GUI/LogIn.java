@@ -110,12 +110,6 @@ public class LogIn extends javax.swing.JFrame {
 
     private void LogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogActionPerformed
         // TODO add your handling code here:
-        //controller.CommandAplicator("test");
-        /*PrincipalFacturador pf = new PrincipalFacturador();
-        pf.setWindowParam(controller);
-        //pf.getStrings();
-        pf.setVisible(true);*/
-        //System.out.println(getSHA(jPasswordField1.getPassword().toString()));
         System.out.println(getSHA(password.getText()));
         //controller.CommandAplicator("test", getSHA(password.getText()));
         String typeUser = controller.logIn(jTextField1.getText(), getSHA(password.getText()));

@@ -14,7 +14,6 @@ import javafx.stage.Stage;
  * @author juanj
  */
 public class SistemaAutomoviles extends Application {
-    private ConnectionSQL conect;
     @Override
     public void start(Stage primaryStage) {
         LogIn window = new LogIn();

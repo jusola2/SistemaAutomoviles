@@ -30,17 +30,15 @@ create table DireccionCliente(
 	Distrito nvarchar(50) NOT NULL
 );
 
-create table TipoTarjetaCliente(
-	IdTipoTarjeta int identity(1,1) PRIMARY KEY,
-	Tipo nvarchar(50) NOT NULL
-);
 
 create table Cliente(
 	IdCliente int identity(1,1) PRIMARY KEY,
 	Nombre nvarchar(50) NOT NULL,
 	Apellido nvarchar(50) NOT NULL,
 	Correo nvarchar(120) NOT NULL,
-	IdTarjeta int foreign KEY REFERENCES TipoTarjetaCliente(IdTipoTarjeta),
+	Cedula int NOT NULL,
+	FechaNacimiento date NOT NULL,
+	FechaIngreso date NOT NULL,
 	IdDireccion int foreign KEY REFERENCES DireccionCliente(IdDireccion),
 	IdSucursal int foreign KEY REFERENCES Sucursal(IdSucursal)
 );
