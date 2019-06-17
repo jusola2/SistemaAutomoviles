@@ -1,11 +1,11 @@
 --CREATE DATABASE Facturacion;
 
 CREATE TABLE Estado(
-   ID INT PRIMARY KEY NOT NULL,
+   ID SERIAL PRIMARY KEY NOT NULL,
    Estado varchar(15) NOT NULL);
 
 CREATE TABLE OrdenDePago(
-   	ID INT PRIMARY KEY NOT NULL,
+   	ID SERIAL PRIMARY KEY NOT NULL,
    	IdVehiculo int NOT NULL,
 	IdCliente int NOT NULL,
 	IdSucursal int NOT NULL,
@@ -13,28 +13,28 @@ CREATE TABLE OrdenDePago(
 	IdEstado int REFERENCES Estado(ID));
 	
 CREATE TABLE TipoPago(
-   ID INT PRIMARY KEY NOT NULL,
+   ID SERIAL PRIMARY KEY NOT NULL,
    Tipo varchar(15) NOT NULL);	
 
 CREATE TABLE Factura(
-   ID INT PRIMARY KEY NOT NULL,
+   ID SERIAL PRIMARY KEY NOT NULL,
    IdOrdenPago int REFERENCES OrdenDePago(ID),
    IdTipoPago int REFERENCES TipoPago(ID));
    
 CREATE TABLE AlContado(
-   ID INT PRIMARY KEY NOT NULL,
+   ID SERIAL PRIMARY KEY NOT NULL,
    IdFactura int REFERENCES Factura(ID),
    Monto double precision NOT NULL,
 	FechaPago date NOT NULL);
 	
 CREATE TABLE Impuesto(
-   ID INT PRIMARY KEY NOT NULL,
+   ID SERIAL PRIMARY KEY NOT NULL,
    IdContado int REFERENCES AlContado(ID),
    Monto double precision NOT NULL,
 	FechaPago date NOT NULL);
 	
 CREATE TABLE Credito(
-   ID INT PRIMARY KEY NOT NULL,
+   ID SERIAL PRIMARY KEY NOT NULL,
    IdFactura int REFERENCES Factura(ID),
    Prima double precision NOT NULL,
 	DeudaInical double precision NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE Credito(
 	Plazo int NOT NULL);
 	
 CREATE TABLE PagoCredito(
-   ID INT PRIMARY KEY NOT NULL,
+   ID SERIAL PRIMARY KEY NOT NULL,
    IdCredito int REFERENCES Credito(ID),
    Monto double precision NOT NULL,
 	FechaPago date NOT NULL,
