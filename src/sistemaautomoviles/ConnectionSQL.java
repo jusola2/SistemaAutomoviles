@@ -210,14 +210,11 @@ public class ConnectionSQL {
         cstmt.execute();
         if(cstmt.getInt(4)!=0){
             int idModelo = getModelID(nuevoModelo.getName());
-            //System.out.println("id del modelo "+idModelo); 
+            System.out.println("sistemaautomoviles.ConnectionSQL.nuevoModelo()");
+            System.out.println("id del modelo "+idModelo); 
             for(TipoModelo tipo:nuevoModelo.getTipos()){
-                if(insertarTipoDeModelo(idModelo,tipo.getId())){
-                    resultado=true;
-                }else{
-                    resultado=false;
-                    break;
-                }
+                System.out.println(tipo.getId());
+                insertarTipoDeModelo(idModelo, tipo.getId());
             }
         }
         } catch (SQLException ex) {
@@ -239,20 +236,21 @@ public class ConnectionSQL {
         return idModelo;
     }
     
-    public boolean insertarTipoDeModelo(int idModelo,int idTipo){
+    public void insertarTipoDeModelo(int idModelo,int idTipo){
         boolean resultado = false;
         try(CallableStatement cstmt = con.prepareCall("{call dbo.InsertTipoXModelo  (?, ?, ?)}");) {  
-        cstmt.setInt(1, idModelo);
-        cstmt.setInt(2, idTipo);
+        cstmt.setInt(1, idTipo);
+        cstmt.setInt(2, idModelo);
         cstmt.registerOutParameter(3, java.sql.Types.INTEGER);  
         cstmt.execute();
-        if(cstmt.getInt(3)==1){
+            System.out.println(cstmt.getInt(3));
+        /*if(cstmt.getInt(3)!=1){
             resultado=true;
-        }
+        }*/
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return resultado;
+        //return resultado;
     }
 
 }
