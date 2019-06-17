@@ -25,8 +25,10 @@ BEGIN
 		
 END
 
-/*declare @prueba int;
-execute createOrdenPago 1,1,3,@prueba out
 
+
+
+/*declare @prueba int;
+execute createOrdenPago 1,4,3,@prueba out
 select @prueba*/
 
