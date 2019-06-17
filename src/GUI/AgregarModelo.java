@@ -34,6 +34,7 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
         initComponents();
         Anno.setText(Anno.getText()+" "+Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
         nuevoModelo = new ModeloVehiculo();
+        nuevoModelo.setAnoo(Calendar.getInstance().get(Calendar.YEAR));
     }
 
     /**
@@ -63,6 +64,7 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
         jLabel3 = new javax.swing.JLabel();
         tTipos = new javax.swing.JComboBox<>();
         addType = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,12 +104,19 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
         jLabel2.setText("Caracteristica: ");
 
         addCom.setText("Agregar");
+        addCom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addComActionPerformed(evt);
+            }
+        });
 
         addCarc.setText("Agregar");
 
         jLabel3.setText("Tipoos: ");
 
         addType.setText("Agregar");
+
+        jLabel5.setText("$");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,19 +129,17 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(tCaracteristicas, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(tCombustible, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(tTipos, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(tTipos, 0, 113, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(tCaracteristicas, 0, 113, Short.MAX_VALUE)
+                                .addComponent(tCombustible, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(43, 43, 43)
@@ -157,7 +164,8 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
                                         .addComponent(jLabel4)
                                         .addGap(10, 10, 10)
                                         .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(64, 64, 64)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel5)))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel10)
                                     .addGap(18, 18, 18)
@@ -167,7 +175,7 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(Anno, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(51, 130, Short.MAX_VALUE))
+                .addGap(51, 135, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,7 +202,8 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE))
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
+                    .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -219,6 +228,10 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
         anterior.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void addComActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addComActionPerformed
+        nuevoModelo.addCombustible(comList.get(tCombustible.getSelectedIndex()));
+    }//GEN-LAST:event_addComActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,6 +282,7 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JComboBox<String> tCaracteristicas;
     private javax.swing.JComboBox<String> tCombustible;
@@ -285,15 +299,15 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
     }
     
     private void loadCaracete(){
-        comList = controller.getCombustibles();
-        for(Combustible com:comList){
-            tCombustible.addItem(com.getTipo());
+        caracteristicasList = controller.getCaracteristicas();
+        for(Caracteristica car:caracteristicasList){
+            tCaracteristicas.addItem(car.getDetalle());
         }
     }
     private void loadtypes(){
-        comList = controller.getCombustibles();
-        for(Combustible com:comList){
-            tCombustible.addItem(com.getTipo());
+        tiposList = controller.getTiposVehiculo();
+        for(TipoModelo ti:tiposList){
+            tTipos.addItem(ti.getType());
         }
     }
     
@@ -301,6 +315,8 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
     public void setController(GlobalController Pcontroller) {
         controller=Pcontroller;
         loadCombustibles();
+        loadCaracete();
+        loadtypes();
     }
 
     @Override
