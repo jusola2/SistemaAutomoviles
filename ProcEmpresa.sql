@@ -25,6 +25,8 @@ BEGIN
    WHERE e.IdEmpleado = @IdEmployee 
 END
 
+
+
 --======================================================================
 go
 CREATE PROCEDURE getCombusType    
@@ -32,6 +34,15 @@ AS
 BEGIN  
    execute [Fabrica].[dbo].[CRUD_TipoCombistible] null, null,4,null
 END
+
+--======================================================================
+go
+CREATE PROCEDURE getCaract    
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_Caracteristica] null, null,null,4,null
+END
+
 
 
 

@@ -55,5 +55,13 @@ public class GlobalController {
     public ArrayList<Combustible> getCombustibles(){
         return serverConnection.combustibles();
     }
+
+    public ArrayList<Combustible> getCaracteristicas() {
+        return serverConnection.caracteristicas();
+    }
+
+    public ArrayList<Combustible> getTiposVehiculo() {
+        return serverConnection.tiposVehiculos();
+    }
     
 }
