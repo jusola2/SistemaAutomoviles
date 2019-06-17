@@ -50,6 +50,30 @@ BEGIN
    execute [Fabrica].[dbo].[CRUD_TipoAuto] null,null,4,null
 END
 
+--======================================================================
+
+go
+CREATE PROCEDURE IngresarModelo      
+	@Nombre nvarchar(50),
+	@AnnoModelo int,
+	@PrecioBase int,  
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_ModeloAutomovil] null,@Nombre,@AnnoModelo,@PrecioBase,1,@Resultado
+END
+
+--======================================================================
+
+go
+CREATE PROCEDURE getModelIdByName   
+	@Nombre nvarchar(50),
+	@IdModelo int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[getIdModel] @Nombre, @IdModelo
+END
+
 
 
 --=============================== Sucursal ======================================================================

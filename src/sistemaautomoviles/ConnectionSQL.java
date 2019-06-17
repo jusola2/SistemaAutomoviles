@@ -11,6 +11,7 @@ package sistemaautomoviles;
  */
 import Logic.Caracteristica;
 import Logic.Combustible;
+import Logic.ModeloVehiculo;
 import Logic.TipoModelo;
 import Logic.UserData;
 import java.sql.CallableStatement;
@@ -197,5 +198,22 @@ public class ConnectionSQL {
             Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    public boolean nuevoModelo(ModeloVehiculo nuevoModelo) {
+        boolean resultado = false;
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.IngresarModelo  (?, ?, ?, ?)}");) {  
+        cstmt.setNString(1, nuevoModelo.getName());
+        cstmt.setInt(2, nuevoModelo.getAnoo());
+        cstmt.setInt(3, (int)nuevoModelo.getPreciobase()); 
+        cstmt.registerOutParameter(4, java.sql.Types.INTEGER);  
+        cstmt.execute();
+        if(cstmt.getInt(4)!=0){
+            resultado=true;
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultado;
     }
 }
