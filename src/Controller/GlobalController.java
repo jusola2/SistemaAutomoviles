@@ -29,11 +29,6 @@ public class GlobalController {
         serverConnection = new ConnectionSQL(1);
     }
     
-    public void CommandAplicator(String command, String source){
-        if(command.equals((String) "test")){
-            serverConnection.startConnectionTest(source);
-        }
-    }
     
     public String logIn(String email, String password){
         String result = null;
@@ -49,9 +44,6 @@ public class GlobalController {
         return result;
     }
     
-    public ArrayList<String> users(){
-        return serverConnection.getUser();
-    }
     
     public Cliente getSpecClient(int id){
     return serverConnection.getSpecificCliente(id);
@@ -75,6 +67,10 @@ public class GlobalController {
 
     public boolean insertarModelo(ModeloVehiculo nuevoModelo) {
         return serverConnection.nuevoModelo(nuevoModelo);
+    }
+    
+    public ArrayList<ModeloVehiculo> getAllModels(){
+        return serverConnection.getModelos();
     }
     
 }

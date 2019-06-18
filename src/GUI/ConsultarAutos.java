@@ -7,6 +7,8 @@ package GUI;
 
 import Controller.GlobalController;
 import Logic.ControllerCompatible;
+import Logic.ModeloVehiculo;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 
@@ -19,6 +21,7 @@ public class ConsultarAutos extends javax.swing.JFrame implements ControllerComp
     protected GlobalController controller;
     private JFrame anterior;
     private DefaultListModel modelo = new DefaultListModel();
+    private ArrayList<ModeloVehiculo> modelos;
     /**
      * Creates new form ConsultarAutos
      */
@@ -213,8 +216,8 @@ public class ConsultarAutos extends javax.swing.JFrame implements ControllerComp
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AutoAdministrador AutoA = new AutoAdministrador();
-        AutoA.setVisible(true);
+        anterior.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -296,10 +299,18 @@ public class ConsultarAutos extends javax.swing.JFrame implements ControllerComp
     @Override
     public void setController(GlobalController Pcontroller) {
         controller=Pcontroller;
+        setWindow();
     }
 
     @Override
     public void ventanaAnterior(JFrame ventana) {
         anterior = ventana;
+    }
+
+    private void setWindow() {
+        modelos = controller.getAllModels();
+        for(ModeloVehiculo pmodelo:modelos){
+            modelo.addElement(pmodelo.getName());
+        }
     }
 }
