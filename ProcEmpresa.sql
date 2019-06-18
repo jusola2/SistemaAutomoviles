@@ -616,7 +616,9 @@ GO
 CREATE PROCEDURE getSpecificClient (@IdCliente int)
 AS
 BEGIN 
-	execute CRUD_Cliente @IdCliente,null,null,null,null,null,null,null,null,4,null
+	Select C.IdCliente, C.Nombre, C.Apellido
+			From Cliente C
+			Where IdCliente=isnull(@IdCliente,IdCliente)
 END
 
 

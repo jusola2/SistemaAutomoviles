@@ -225,6 +225,6 @@ END
 
 
 /*declare @prueba int;
-execute createOrdenPago 1,4,3,@prueba out
+execute createOrdenPago 1,4,1,@prueba out
 select @prueba*/
 
