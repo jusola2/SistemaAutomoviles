@@ -869,7 +869,7 @@ END
 -- Empleado
 GO
 CREATE PROCEDURE CRUD_Empleado (@IdEmpleado int, @TipoEmpleado int,
-@Nombre nvarchar(50),@Apellido nvarchar, @FechaIngreso date, @Opc int,@Resultado int out)
+@Nombre nvarchar(50),@Apellido nvarchar(50), @FechaIngreso date, @Opc int,@Resultado int out)
 AS
 BEGIN
 	begin try

@@ -1,5 +1,12 @@
 use Empresa
 
+
+
+--======================================================================================================================
+--                                       SP Fabrica
+--======================================================================================================================
+
+
 --=============================== Usuario ======================================================================
 Go
 CREATE PROCEDURE getLogInId  
@@ -13,7 +20,17 @@ BEGIN
    FROM UsuarioAplicacion ua inner join TipoUsuario tp on ua.IdTipoUsuario=tp.Id
    WHERE ua.Email = @email and @contraseña = ua.Contraseña 
 END
---======================================================================
+--============================ Tipo Empleado ==========================================
+
+go
+CREATE PROCEDURE InsertTipoEmpleado 
+	@Detalle nvarchar(50),
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_TipoEmpleado] null, @Detalle, 1,@Resultado out
+END
+
 go
 CREATE PROCEDURE getEmployeeType    
    @IdEmployee int,
@@ -27,7 +44,17 @@ END
 
 
 
---======================================================================
+--========================= TipoCombustible =============================================
+go
+CREATE PROCEDURE InsertCombusType      
+	@Detalle nvarchar(50), 
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_TipoCombistible] null,@Detalle,1,@Resultado out
+END
+
+
 go
 CREATE PROCEDURE getCombusType    
 AS  
@@ -35,14 +62,37 @@ BEGIN
    execute [Fabrica].[dbo].[CRUD_TipoCombistible] null, null,4,null
 END
 
---======================================================================
+--========================= Caractetistica =============================================
+go
+CREATE PROCEDURE InsertCaract      
+	@Detalle nvarchar(50), 
+	@PrecioBase int,
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_Caracteristica] null,@Detalle,@PrecioBase, 1,@Resultado out
+END
+
+
 go
 CREATE PROCEDURE getCaract    
 AS  
 BEGIN  
    execute [Fabrica].[dbo].[CRUD_Caracteristica] null, null,null,4,null
 END
---======================================================================
+
+--====================Tipo Vehiculos ==================================================
+go
+CREATE PROCEDURE InsertVehTypes    
+	@Detalle nvarchar(50), 
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_TipoAuto] null,@Detalle, 1,@Resultado out
+END
+
+
+
 go
 CREATE PROCEDURE getVehTypes    
 AS  
@@ -50,10 +100,9 @@ BEGIN
    execute [Fabrica].[dbo].[CRUD_TipoAuto] null,null,null,4,null
 END
 
---======================================================================
-
+--========================Modelo==============================================
 go
-CREATE PROCEDURE IngresarModelo      
+CREATE PROCEDURE InsertModelo      
 	@Nombre nvarchar(50),
 	@AnnoModelo int,
 	@PrecioBase int,  
@@ -61,6 +110,14 @@ CREATE PROCEDURE IngresarModelo
 AS  
 BEGIN  
    execute [Fabrica].[dbo].[CRUD_ModeloAutomovil] null,@Nombre,@AnnoModelo,@PrecioBase,1,@Resultado out
+END
+
+
+go
+CREATE PROCEDURE getModelo    
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_ModeloAutomovil] null,null,null,null,4,null
 END
 
 --======================================================================
@@ -74,7 +131,7 @@ BEGIN
    execute [Fabrica].[dbo].[getIdModel] @Nombre, @IdModelo out
 END
 
---======================================================================
+--============================TipoModelo==========================================
 
 go
 CREATE PROCEDURE InsertTipoXModelo 
@@ -107,6 +164,276 @@ AS
 BEGIN  
    execute [Fabrica].[dbo].[CRUD_CaractXModelo] null,@TipoCarc, @Modelo,1,@Resultado out
 END
+
+go
+CREATE PROCEDURE getTipoXModelo    
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_TipoXModelol] null,null,null,4,null
+END
+
+--============================CaracteristicaXModelo==========================================
+
+go
+CREATE PROCEDURE InsertCaracXModelo 
+	@Caract int,
+	@Modelo int, 
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_CaractXModelo] null,@Caract, @Modelo,1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getCaracXModelo    
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_CaractXModelo] null,null,null,4,null
+END
+
+--============================ Pedido ==========================================
+
+go
+CREATE PROCEDURE InsertPedido 
+	@Modelo int, 
+	@Combustible int, 
+	@TipoAuto int,
+	@Color nvarchar(50),
+	@FechaPedido date,
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_Pedido] null,@Modelo, @Combustible, @TipoAuto,@Color,@FechaPedido, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getPedido    
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_Pedido] null,null, null, null,null,null, 4,null
+END
+
+
+--============================ CaracXPedido ==========================================
+
+go
+CREATE PROCEDURE InsertCaracXPedido 
+	@Caract int,
+	@Pedido int,
+	@Linea nvarchar(50),
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_CaractXPedido] null,@Caract, @Pedido, @Linea, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getCaracXPedido    
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_CaractXPedido] null,null, null, null, 4,null
+END
+
+
+--============================ Automovil ==========================================
+
+go
+CREATE PROCEDURE InsertAutomovil
+	@Modelo int,
+	@Tipo int,
+	@Combustible int,
+	@Color nvarchar(50),
+	@FechaFabricacion date,
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_Automovil] null,@Modelo, @Tipo, @Combustible,@Color,@FechaFabricacion, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getAutomovil    
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_Automovil] null,null, null, null,null,null, 4,null
+END
+
+
+--============================ CaracXAuto ==========================================
+
+go
+CREATE PROCEDURE InsertCaracXAuto 
+	@Caract int,
+	@Auto int,
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_CaractXAuto] null,@Caract, @Auto, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getCaracXAuto   
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_CaractXAuto] null,null, null, 4,null
+END
+
+
+--============================ CombXModelo ==========================================
+
+go
+CREATE PROCEDURE InsertCombXModelo
+	@Comb int,
+	@Modelo int,
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_CombustibleXModelo] null,@Comb, @Modelo, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getCombXModelo 
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_CombustibleXModelo] null,null, null, 4,null
+END
+
+
+--============================ Empleado ==========================================
+
+go
+CREATE PROCEDURE InsertEmpleado
+	@TipoEmpleado int,
+	@Nombre nvarchar(50),
+	@Apellido nvarchar(50),
+	@FechaIngreso date,
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_Empleado] null,@TipoEmpleado, @Nombre, @Apellido,@FechaIngreso, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getEmpleado    
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_Empleado] null,null, null, null,null, 4,null
+END
+
+
+--======================================================================================================================
+--                                       SP Empresa
+--======================================================================================================================
+
+--============================ Sucursal ==========================================
+
+go
+CREATE PROCEDURE InsertSucursal
+	@NombreS nvarchar(50),
+	@HoraAbertura int,
+	@HoraCierre int,
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Sucursal] null,@NombreS, @HoraAbertura, @HoraCierre, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getSucursal    
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Sucursal] null,null, null, null, 4,null
+END
+
+--============================ Direccion Cliente ==========================================
+go
+CREATE PROCEDURE InsertDireccion
+	@Provincia nvarchar(50),
+	@Distrito nvarchar(50),
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Direccion] null,@Provincia, @Distrito, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getDireccion   
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Direccion] null,null, null, 4,null
+END
+
+--============================ Cliente ==========================================
+go
+CREATE PROCEDURE InsertCliente
+	@Nombre nvarchar(50),
+	@Apellido nvarchar(50),
+	@Correo nvarchar(120),
+	@Cedula int, 
+	@FechaNac date, 
+	@Provincia nvarchar(50),
+	@Distrito nvarchar(50), 
+	@Sucursal int,
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Cliente] null,@Nombre,@Apellido, @Correo ,@Cedula ,@FechaNac ,@Provincia ,@Distrito ,@Sucursal, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getCliente   
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Cliente] null,null,null,null,null,null,null,null, null, 4,null
+END
+ 
+--============================ TipoEmpleado ==========================================
+
+go
+CREATE PROCEDURE InsertTipoEmpleado
+	@Detalle nvarchar(120),
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_TipoEmpleado] null,@Detalle, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getTipoEmpleado   
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_TipoEmpleado] null,null, 4,null
+END
+
+ --============================ TipoEmpleado ==========================================
+
+go
+CREATE PROCEDURE InsertEmpleado
+	@Nombre nvarchar(50),
+	@Apellido nvarchar(50), 
+	@FechaIngreso date,
+	@NombreTipo nvarchar(50),
+	@TipoEmp int, 
+	@Sucursal int,
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_TipoEmpleado] null,@Nombre, @Apellido, @FechaIngreso, @NombreTipo, @TipoEmp ,@Sucursal, 1,@Resultado out
+END
+
+go
+CREATE PROCEDURE getEmpleado   
+AS  
+BEGIN  
+   execute [Empresa].[dbo].[CRUD_Empleado] null,null,null,null,null,null,null, 4,null
+END
+
+
+
+
+--======================================================================================================================
+--                                       CRUD Empresa
+--======================================================================================================================
+
 
 --=============================== Sucursal ======================================================================
 
@@ -484,3 +811,81 @@ END
 --=============================== Inventario ======================================================================
 
 ---CrearInventario
+
+
+
+--=============================== Comision ======================================================================
+
+
+Go
+create procedure CRUD_Comision (@ID int, @IdFactura int, @Opc int,@Resultado int out)
+AS
+BEGIN 
+begin try
+		set @Resultado = 1;
+		IF @Opc = 1
+		BEGIN 
+			begin try
+				begin tran 
+					Declare @Sucursal int
+					set @Sucursal=(select op.idSucursal FROM [Facturacion].[dbo].[Factura] f 
+					inner join OrdenDePago op on f.IdOrdenPago= od.ID
+					where f.ID=@IdFactura)
+					Declare @Monto int
+					set @Monto=((select ac.monto FROM [Facturacion].[dbo].[Factura] f 
+					inner join alContado ac on f.ID= ac.IdFactura
+					where f.ID=@IdFactura)*0.10)
+					Insert Into Comision
+					Values  (@Sucursal,@Monto);
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 2
+		BEGIN
+			begin try
+				begin tran 
+					Declare @Sucursal int
+					set @Sucursal=(select op.idSucursal FROM [Facturacion].[dbo].[Factura] f 
+					inner join OrdenDePago op on f.IdOrdenPago= od.ID
+					where f.ID=@IdFactura)
+					Declare @Monto int
+					set @Monto=((select ac.monto FROM [Facturacion].[dbo].[Factura] f 
+					inner join alContado ac on f.ID= ac.IdFactura
+					where f.ID=@IdFactura)*0.10)
+					Update Comision Set IdSucursal=isnull(IdSucursal,@Sucursal),monto= ISNULL(monto,@Monto)
+					where Id=@ID
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 3
+		BEGIN
+			begin try
+				begin tran
+					Delete from Comision where Id=@ID
+				commit 
+			end try
+			begin catch
+				rollback
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 4
+		BEGIN
+			Select C.Id, S.NombreS NombreSucursal, C.monto
+			From Comision C
+			inner join Sucursal S on C.IdSucursal = S.IdSucursal 
+			Where C.Id=isnull(@Id,Id)
+		END
+	end try
+	begin catch
+		set @Resultado = 0;
+	end catch
+END
