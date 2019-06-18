@@ -54,4 +54,17 @@ create table UsuarioAplicacion(
 	Contraseña nvarchar(max) NOT NULL,
 	IdTipoUsuario int foreign KEY REFERENCES TipoUsuario(Id),
 	IdEnBase int NOT NULL
+)
+
+create table EstadoVehiculoInventario(
+	Id int identity(1,1) PRIMARY KEY,
+	Estado nvarchar(150) Not null,
 );
+
+create table InventarioSucursal(
+	Id int identity(1,1) PRIMARY KEY,
+	IdSucursal int foreign KEY REFERENCES Sucursal(IdSucursal),
+	IdEstado int foreign KEY REFERENCES EstadoVehiculoInventario(Id),
+	IdVehiculo int not null
+);
+

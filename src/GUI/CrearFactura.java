@@ -7,6 +7,7 @@ package GUI;
 
 import Controller.GlobalController;
 import Logic.ControllerCompatible;
+import Logic.OrdenPago;
 import javax.swing.JFrame;
 
 /**
@@ -17,6 +18,7 @@ public class CrearFactura extends javax.swing.JFrame implements ControllerCompat
 
     protected GlobalController controller;
     private JFrame anterior;
+    private OrdenPago ordenLocal;
     /**
      * Creates new form CrearFactura
      */
@@ -136,6 +138,12 @@ public class CrearFactura extends javax.swing.JFrame implements ControllerCompat
     @Override
     public void setController(GlobalController Pcontroller){
         controller = Pcontroller;
+    }
+    
+    public void loadInfo(OrdenPago orden){
+        ordenLocal=orden;
+        nombreCliente.setText("Nombre: "+ordenLocal.getCliente().getNombre());
+        apellidoCliente.setText("Apellido"+ordenLocal.getCliente().getApellido());
     }
     
     @Override

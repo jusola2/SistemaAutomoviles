@@ -56,6 +56,11 @@ public class PrincipalFacturador extends javax.swing.JFrame implements Controlle
         jLabel1.setToolTipText("");
 
         crearFactura.setText("Proceso Factura");
+        crearFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearFacturaActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Anterior");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -105,6 +110,16 @@ public class PrincipalFacturador extends javax.swing.JFrame implements Controlle
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void crearFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearFacturaActionPerformed
+        // TODO add your handling code here:
+        CrearFactura w = new CrearFactura();
+        w.setController(controller);
+        w.ventanaAnterior(this);
+        w.loadInfo(listDePAgos.get(jList1.getSelectedIndex()));
+        w.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_crearFacturaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -151,10 +166,12 @@ public class PrincipalFacturador extends javax.swing.JFrame implements Controlle
         anterior=ventana;
     }
     public void getStrings(){
-        ArrayList<OrdenPago> strings = controller.ordenesPago();
-        for(OrdenPago st:strings){
+        listDePAgos = controller.ordenesPago();
+        for(OrdenPago st:listDePAgos){
             if(st.getCliente()!=null){
                 model.addElement(st.getCliente().getNombre()+" "+st.getCliente().getApellido());
+            }else{
+                model.addElement(st.getId());
             }
             
         }
