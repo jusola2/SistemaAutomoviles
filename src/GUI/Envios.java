@@ -5,12 +5,18 @@
  */
 package GUI;
 
+import Controller.GlobalController;
+import Logic.ControllerCompatible;
+import javax.swing.JFrame;
+
 /**
  *
  * @author steph
  */
-public class Envios extends javax.swing.JFrame {
+public class Envios extends javax.swing.JFrame implements ControllerCompatible{
 
+    protected GlobalController controller;
+    private JFrame anterior;
     /**
      * Creates new form Envios
      */
@@ -126,9 +132,8 @@ public class Envios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        AutoFabrica autoF = new AutoFabrica();
-        autoF.setVisible(true);
-        autoF.dispose();
+        anterior.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -178,4 +183,14 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setController(GlobalController Pcontroller){
+        controller = Pcontroller;
+    }
+
+    @Override
+    public void ventanaAnterior(JFrame ventana) {
+        anterior=ventana;
+    }
 }
