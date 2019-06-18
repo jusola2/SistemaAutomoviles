@@ -206,6 +206,21 @@ BEGIN
    execute [Fabrica].[dbo].[CRUD_Pedido] null,@Modelo, @Combustible, @TipoAuto,@Color,@FechaPedido, 1,@Resultado out
 END
 
+Go
+CREATE PROCEDURE getPedido
+	@ID int
+AS  
+BEGIN  
+	select p.IdPedido, mc.NombreModelo, mc.AnnoModelo, mc.PrecioBase,tc.Detalle TipoCombustible,
+	tp.Detalle TipoAuto, tp.NumeroPuertas, p.Color, p.FechaPedido
+	from [BDFabrica].[Fabrica].[public].[Pedido] p
+	inner join [BDFabrica].[Fabrica].[public].[ModeloAutomovil] mc on mc.IdModeloAutomovil= p.IdModelo
+	inner join [BDFabrica].[Fabrica].[public].[TipoCombustible] tc on tc.IdTipoCombus= p.IdCombustible
+	inner join[BDFabrica].[Fabrica].[public].[TipoAuto] ta on tp.TipoAuto= p.IdTipoAuto
+	where p.IdPedido=@ID;
+		
+END
+
 go
 CREATE PROCEDURE getPedido    
 AS  
