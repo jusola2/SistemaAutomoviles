@@ -828,12 +828,12 @@ begin try
 			begin try
 				begin tran 
 					Declare @Sucursal int
-					set @Sucursal=(select op.idSucursal FROM [Facturacion].[dbo].[Factura] f 
-					inner join OrdenDePago op on f.IdOrdenPago= od.ID
+					set @Sucursal=(select op.idSucursal FROM  [BD_FACTURACION].[Facturacion].[public].[factura] f
+					inner join [BD_FACTURACION].[Facturacion].[public].[ordendepago] op on op.ID = f.IdOrdenPago 
 					where f.ID=@IdFactura)
 					Declare @Monto int
-					set @Monto=((select ac.monto FROM [Facturacion].[dbo].[Factura] f 
-					inner join alContado ac on f.ID= ac.IdFactura
+					set @Monto=((select ac.monto FROM [BD_FACTURACION].[Facturacion].[public].[factura] f 
+					inner join [BD_FACTURACION].[Facturacion].[public].[alcontado] ac on f.ID= ac.IdFactura
 					where f.ID=@IdFactura)*0.10)
 					Insert Into Comision
 					Values  (@Sucursal,@Monto);
@@ -848,15 +848,15 @@ begin try
 		BEGIN
 			begin try
 				begin tran 
-					Declare @Sucursal int
-					set @Sucursal=(select op.idSucursal FROM [Facturacion].[dbo].[Factura] f 
-					inner join OrdenDePago op on f.IdOrdenPago= od.ID
+					Declare @Sucursal2 int
+					set @Sucursal2=(select op.idSucursal FROM  [BD_FACTURACION].[Facturacion].[public].[factura] f
+					inner join [BD_FACTURACION].[Facturacion].[public].[ordendepago] op on op.ID = f.IdOrdenPago 
 					where f.ID=@IdFactura)
-					Declare @Monto int
-					set @Monto=((select ac.monto FROM [Facturacion].[dbo].[Factura] f 
-					inner join alContado ac on f.ID= ac.IdFactura
+					Declare @Monto2 int
+					set @Monto2=((select ac.monto FROM [BD_FACTURACION].[Facturacion].[public].[factura] f 
+					inner join [BD_FACTURACION].[Facturacion].[public].[alcontado] ac on f.ID= ac.IdFactura
 					where f.ID=@IdFactura)*0.10)
-					Update Comision Set IdSucursal=isnull(IdSucursal,@Sucursal),monto= ISNULL(monto,@Monto)
+					Update Comision Set IdSucursal=isnull(IdSucursal,@Sucursal2),monto= ISNULL(monto,@Monto2)
 					where Id=@ID
 				commit 
 			end try
