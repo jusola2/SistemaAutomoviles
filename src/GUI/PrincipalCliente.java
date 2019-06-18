@@ -7,6 +7,9 @@ package GUI;
 
 import Controller.GlobalController;
 import Logic.ControllerCompatible;
+import Logic.ModeloVehiculo;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 
 /**
@@ -17,6 +20,8 @@ public class PrincipalCliente extends javax.swing.JFrame implements ControllerCo
 
     protected GlobalController controller;
     private JFrame anterior;
+    private DefaultListModel modelo = new DefaultListModel();
+    private ArrayList<ModeloVehiculo> modelos;
     /**
      * Creates new form PrincipalCliente
      */
@@ -74,11 +79,7 @@ public class PrincipalCliente extends javax.swing.JFrame implements ControllerCo
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        jList1.setModel(modelo);
         jScrollPane1.setViewportView(jList1);
 
         jLabel6.setText("-");
@@ -215,6 +216,8 @@ public class PrincipalCliente extends javax.swing.JFrame implements ControllerCo
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        anterior.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
@@ -288,10 +291,17 @@ public class PrincipalCliente extends javax.swing.JFrame implements ControllerCo
     @Override
     public void setController(GlobalController Pcontroller){
         controller = Pcontroller;
+        setWindow();
     }
 
     @Override
     public void ventanaAnterior(JFrame ventana) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        anterior=ventana;
+    }
+    private void setWindow() {
+        modelos = controller.getAllModels();
+        for(ModeloVehiculo pmodelo:modelos){
+            modelo.addElement(pmodelo.getName());
+        }
     }
 }

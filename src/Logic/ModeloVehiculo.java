@@ -26,6 +26,17 @@ public class ModeloVehiculo {
         tipos = new  ArrayList<>();
         caracteristicas = new ArrayList<>();        
     }
+
+    public ModeloVehiculo(String name, int anoo, int preciobase) {
+        this.name = name;
+        this.anoo = anoo;
+        this.preciobase = preciobase;
+        combustibles = new ArrayList<>();
+        tipos = new  ArrayList<>();
+        caracteristicas = new ArrayList<>();  
+    }
+    
+    
     
     public void addCombustible(Combustible entrante){
         if(!combustibles.contains(entrante)){

@@ -120,7 +120,11 @@ public class LogIn extends javax.swing.JFrame {
                 AWindow.ventanaAnterior(this);
                 AWindow.setVisible(true);
                 break;
-            case "Vendedor":
+            case "Cliente":
+                PrincipalCliente pc = new PrincipalCliente();
+                pc.setController(controller);
+                pc.ventanaAnterior(this);
+                pc.setVisible(true);
                 break;
             case "Facturador":
                 PrincipalFacturador pf = new PrincipalFacturador();

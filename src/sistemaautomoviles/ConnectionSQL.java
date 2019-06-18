@@ -64,53 +64,6 @@ public class ConnectionSQL {
         return connectionState;
     }
     
-    public ArrayList<String> getUser(){
-        ArrayList<String> list = new ArrayList<>();
-        try{
-            Statement stmt = con.createStatement(); 
-            String SQL = "SELECT  * FROM Contact";
-            ResultSet rs = stmt.executeQuery(SQL);
-            
-            // Iterate through the data in the result set and display it.
-            while (rs.next()) {
-                list.add(rs.getString("FirstName") + " " + rs.getString("LastName")); 
-                System.out.println(rs.getString("FirstName") + " " + rs.getString("LastName"));
-            }
-            //con.close();
-            
-        }
-        // Handle any errors that may have occurred.
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-    
-
-    public void startConnectionTest(String password){        
-        try{
-            Statement stmt = con.createStatement(); 
-            String SQL = "SELECT  * FROM UsuarioAplicacion";
-            ResultSet rs = stmt.executeQuery(SQL);
-            boolean exist= false;
-            // Iterate through the data in the result set and display it.
-            while (rs.next()) {
-                System.out.println(rs.getString("Contraseña"));
-                if(rs.getString("Contraseña") == null ? password == null : rs.getString("Contraseña").equals(password)){
-                    exist = true;
-                }
-            }
-            System.out.println("sistemaautomoviles.ConnectionSQL.startConnectionTest()");
-            System.out.println(exist);
-            //con.close();
-            
-        }
-        // Handle any errors that may have occurred.
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
     public String getTypeOfEmployee(int IdEmpleado){
         String tempType = null;
         try(CallableStatement cstmt = con.prepareCall("{call dbo.getEmployeeType  (?, ?)}");) {  
@@ -298,6 +251,19 @@ public class ConnectionSQL {
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public ArrayList<ModeloVehiculo> getModelos(){
+        ArrayList<ModeloVehiculo> list = new ArrayList<>();
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.getAllModels()}");) {  
+        ResultSet rs = cstmt.executeQuery();
+        while (rs.next()) {
+                list.add(new ModeloVehiculo(rs.getString(1),rs.getInt(2),rs.getInt(3)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
 }
