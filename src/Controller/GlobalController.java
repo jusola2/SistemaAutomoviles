@@ -73,4 +73,7 @@ public class GlobalController {
         return serverConnection.getModelos();
     }
     
+    public ArrayList<String> getAllSucursales(){
+        return serverConnection.getSucursales();
+    }
 }

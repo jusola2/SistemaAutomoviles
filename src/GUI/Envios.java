@@ -7,6 +7,8 @@ package GUI;
 
 import Controller.GlobalController;
 import Logic.ControllerCompatible;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 
 /**
@@ -17,6 +19,7 @@ public class Envios extends javax.swing.JFrame implements ControllerCompatible{
 
     protected GlobalController controller;
     private JFrame anterior;
+    private DefaultListModel model = new DefaultListModel();
     /**
      * Creates new form Envios
      */
@@ -47,11 +50,7 @@ public class Envios extends javax.swing.JFrame implements ControllerCompatible{
 
         jLabel1.setText("Envíos ");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        jList1.setModel(model);
         jScrollPane1.setViewportView(jList1);
 
         jLabel2.setText("Automóviles ");
@@ -187,10 +186,18 @@ public class Envios extends javax.swing.JFrame implements ControllerCompatible{
     @Override
     public void setController(GlobalController Pcontroller){
         controller = Pcontroller;
+        loadSucursales();
     }
 
     @Override
     public void ventanaAnterior(JFrame ventana) {
         anterior=ventana;
+    }
+
+    private void loadSucursales() {
+        ArrayList<String> str = controller.getAllSucursales();
+        for(String st:str){
+            model.addElement(st);
+        }
     }
 }
