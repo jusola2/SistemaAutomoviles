@@ -60,8 +60,8 @@ CREATE PROCEDURE createFactura
 AS  
 BEGIN  
 	set @Type = 1;
-			Insert into [BD_FACTURACION].[Facturacion].[public].[factura] (IdOrdenpago,IdTipoPago)
-			Values(@IdOrdenPago,@IdTipoPago)
+			Insert into [BD_FACTURACION].[Facturacion].[public].[factura] (IdOrdenpago,IdTipoPago,FechaCreacion)
+			Values(@IdOrdenPago,@IdTipoPago,getdate())
 		
 END
 
@@ -83,13 +83,12 @@ Go
 CREATE PROCEDURE createAlContado  
    @IdFactura int,
    @Monto double precision,
-   @FechaPago date,
    @Type int OUTPUT 
 AS  
 BEGIN  
 	set @Type = 1;
 			Insert into [BD_FACTURACION].[Facturacion].[public].[alcontado] (IdFactura,Monto,Fechapago)
-			Values(@IdFactura,@Monto,@FechaPago)
+			Values(@IdFactura,@Monto,getdate())
 		
 END
 
@@ -115,13 +114,12 @@ CREATE PROCEDURE createImpuesto
    @ID  int, 
    @IdContado int,
    @Monto double precision,
-   @FechaPago date,
    @Type int OUTPUT 
 AS  
 BEGIN  
 	set @Type = 1;
 			Insert into [BD_FACTURACION].[Facturacion].[public].[impuesto] (IdContado,Monto,Fechapago)
-			Values(@IdContado,@Monto,@FechaPago)
+			Values(@IdContado,@Monto,getdate())
 		
 END
 
@@ -220,7 +218,20 @@ END
 
 ------------------------------------------------------------------------------------------------------
 
+CREATE PROCEDURE mereceDescuento
+	@IDCliente int,
+	@fechaConsulta date,
+	@Resultado int OUTPUT 
+AS  
+BEGIN  
+	select @Resultado = COUNT(op.idCliente)
+	from [BD_FACTURACION].[Facturacion].[public].[factura] f
+	inner join [BD_FACTURACION].[Facturacion].[public].[ordendepago] op on op.ID = f.IdOrdenPago 
+	where (f.fechacreacion > DATEADD(YEAR,-5,@fechaConsulta)) and @IDCliente=op.idCliente
+		
+END
 
+------------------------------------------------------------------------------------------------------
 /*declare @prueba int;
 execute createOrdenPago 1,4,1,@prueba out
 select @prueba*/

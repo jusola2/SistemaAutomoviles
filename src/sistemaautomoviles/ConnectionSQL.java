@@ -181,6 +181,7 @@ public class ConnectionSQL {
 
     public ArrayList<Combustible> combustibles() { 
         ArrayList<Combustible> list = new ArrayList<>();
+        System.out.println("sistemaautomoviles.ConnectionSQL.combustibles()");
         try(CallableStatement cstmt = con.prepareCall("{call dbo.getCombusType ()}");) {  
         ResultSet rs = cstmt.executeQuery();
         while (rs.next()) {

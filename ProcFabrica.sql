@@ -130,7 +130,7 @@ END
 
 -- Tipo Auto
 GO
-CREATE PROCEDURE CRUD_TipoAuto (@IdTipo int,@Detalle nvarchar(50), @Opc int,@Resultado int out)
+CREATE PROCEDURE CRUD_TipoAuto (@IdTipo int,@Detalle nvarchar(50), @NumeroPuertas int, @Opc int,@Resultado int out)
 AS
 BEGIN 
 	begin try
@@ -140,7 +140,7 @@ BEGIN
 			begin try
 				begin tran 
 					Insert Into TipoAuto
-					Values  (@Detalle);
+					Values  (@Detalle,@NumeroPuertas);
 				commit 
 			end try
 			begin catch
@@ -152,7 +152,9 @@ BEGIN
 		BEGIN
 			begin try
 				begin tran 
-					Update TipoAuto Set Detalle=isnull(Detalle,@Detalle)
+					Update TipoAuto 
+					Set Detalle=isnull(Detalle,@Detalle),
+					NumeroPuertas = isnull(NumeroPuertas,@NumeroPuertas)
 					where IdTipoAuto=@IdTipo
 				commit 
 			end try

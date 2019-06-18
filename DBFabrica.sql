@@ -25,6 +25,7 @@ create table CombustibleXModelo(
 create table TipoAuto (
 	IdTipoAuto int  identity(1,1) PRIMARY KEY,
 	Detalle nvarchar(80) NOT NULL,
+	NumeroPuertas int NOT NULL
 );
 
 create table TipoXModelo(

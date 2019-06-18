@@ -47,7 +47,7 @@ go
 CREATE PROCEDURE getVehTypes    
 AS  
 BEGIN  
-   execute [Fabrica].[dbo].[CRUD_TipoAuto] null,null,4,null
+   execute [Fabrica].[dbo].[CRUD_TipoAuto] null,null,null,4,null
 END
 
 --======================================================================
