@@ -135,6 +135,28 @@ AS
 BEGIN  
    execute [Fabrica].[dbo].[CRUD_TipoXModelo] null,@Tipo, @Modelo,1,@Resultado out
 END
+--======================================================================
+
+go
+CREATE PROCEDURE InsertCombXModelo 
+	@TipoCom int,
+	@Modelo int, 
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_CombustibleXModelo] null,@TipoCom, @Modelo,1,@Resultado out
+END
+--======================================================================
+
+go
+CREATE PROCEDURE InsertCaractXModelo 
+	@TipoCarc int,
+	@Modelo int, 
+	@Resultado int out
+AS  
+BEGIN  
+   execute [Fabrica].[dbo].[CRUD_CaractXModelo] null,@TipoCarc, @Modelo,1,@Resultado out
+END
 
 go
 CREATE PROCEDURE getTipoXModelo    
@@ -576,6 +598,15 @@ BEGIN
 END*/
 
 -------------- Cliente
+
+GO
+CREATE PROCEDURE getSpecificClient (@IdCliente int)
+AS
+BEGIN 
+	execute CRUD_Cliente @IdCliente,null,null,null,null,null,null,null,null,4,null
+END
+
+
 GO
 CREATE PROCEDURE CRUD_Cliente (@IdCliente int,@Nombre nvarchar(50),@Apellido nvarchar(50),@Correo nvarchar(120),
 @Cedula int, @FechaNac date, @Provincia nvarchar(50),@Distrito nvarchar(50), @Sucursal int, @Opc int,@Resultado int out)

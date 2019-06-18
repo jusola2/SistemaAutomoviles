@@ -6,8 +6,10 @@
 package Controller;
 
 import Logic.Caracteristica;
+import Logic.Cliente;
 import Logic.Combustible;
 import Logic.ModeloVehiculo;
+import Logic.OrdenPago;
 import Logic.TipoModelo;
 import Logic.UserData;
 import java.util.ArrayList;
@@ -51,7 +53,11 @@ public class GlobalController {
         return serverConnection.getUser();
     }
     
-    public ArrayList<String> ordenesPago(){
+    public Cliente getSpecClient(int id){
+    return serverConnection.getSpecificCliente(id);
+    }
+    
+    public ArrayList<OrdenPago> ordenesPago(){
         return serverConnection.getOrdenesPago();
     }
     

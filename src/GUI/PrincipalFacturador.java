@@ -7,6 +7,7 @@ package GUI;
 
 import Controller.GlobalController;
 import Logic.ControllerCompatible;
+import Logic.OrdenPago;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -20,6 +21,7 @@ public class PrincipalFacturador extends javax.swing.JFrame implements Controlle
     protected GlobalController controller;
     private JFrame anterior;
     private DefaultListModel model = new DefaultListModel();
+    private ArrayList<OrdenPago> listDePAgos;
     /**
      * Creates new form PrincipalFacturador
      * @param controller
@@ -144,10 +146,17 @@ public class PrincipalFacturador extends javax.swing.JFrame implements Controlle
         getStrings();
     }
     
+    @Override
+    public void ventanaAnterior(JFrame ventana) {
+        anterior=ventana;
+    }
     public void getStrings(){
-        ArrayList<String> strings = controller.ordenesPago();
-        for(String st:strings){
-            model.addElement(st);
+        ArrayList<OrdenPago> strings = controller.ordenesPago();
+        for(OrdenPago st:strings){
+            if(st.getCliente()!=null){
+                model.addElement(st.getCliente().getNombre()+" "+st.getCliente().getApellido());
+            }
+            
         }
     }
 
@@ -159,8 +168,5 @@ public class PrincipalFacturador extends javax.swing.JFrame implements Controlle
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void ventanaAnterior(JFrame ventana) {
-        anterior=ventana;
-    }
+    
 }

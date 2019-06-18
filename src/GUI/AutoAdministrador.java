@@ -55,6 +55,11 @@ public class AutoAdministrador extends javax.swing.JFrame implements ControllerC
         });
 
         btnConsultarA.setText("Consultar Modelo");
+        btnConsultarA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarAActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Atrás");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +126,15 @@ public class AutoAdministrador extends javax.swing.JFrame implements ControllerC
         w.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnAgregarAActionPerformed
+
+    private void btnConsultarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAActionPerformed
+        // TODO add your handling code here:
+        ConsultarAutos consulta = new ConsultarAutos();
+        consulta.setController(controller);
+        consulta.ventanaAnterior(this);
+        consulta.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnConsultarAActionPerformed
 
     /**
      * @param args the command line arguments
