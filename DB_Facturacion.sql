@@ -47,18 +47,12 @@ CREATE TABLE PagoCredito(
    IdCredito int REFERENCES Credito(ID),
    Monto double precision NOT NULL,
 	FechaPago date NOT NULL,
-	IsPago bit NOT NULL);
+	IsPago int NOT NULL);
 	
-select * from Factura
+select * from ordendepago
 
-CREATE OR REPLACE FUNCTION esta_activo(carnet int) 
-    RETURNS int AS $$
-    BEGIN
-      return (SELECT actividad.estado from estudiante e inner join actividad ON actividad.idestudiante = e.id where e.id = carnet);
-    END;
-    $$ LANGUAGE plpgsql;
-	
-select esta_activo(2016086099);	
+insert into ordendepago
+values(1,5,1,2019/06/17,1)
 																 
 SELECT * from estudiante e inner join actividad ON actividad.idestudiante = e.id
 
