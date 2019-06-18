@@ -372,6 +372,9 @@ public class AgregarModelo extends javax.swing.JFrame implements ControllerCompa
     }
     
     public void confirmacionCreacion(){
-        System.out.println(controller.insertarModelo(nuevoModelo));
+        if(controller.insertarModelo(nuevoModelo)){
+            nuevoModelo = new ModeloVehiculo();
+            nuevoModelo.setAnoo(Calendar.getInstance().get(Calendar.YEAR));
+        }
     }
 }

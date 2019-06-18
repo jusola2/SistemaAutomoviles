@@ -10,8 +10,10 @@ package sistemaautomoviles;
  * @author juanj
  */
 import Logic.Caracteristica;
+import Logic.Cliente;
 import Logic.Combustible;
 import Logic.ModeloVehiculo;
+import Logic.OrdenPago;
 import Logic.TipoModelo;
 import Logic.UserData;
 import java.sql.CallableStatement;
@@ -148,17 +150,33 @@ public class ConnectionSQL {
         con.close();
     }
 
-    public ArrayList<String> getOrdenesPago() {
-        ArrayList<String> list = new ArrayList<>();
+    public ArrayList<OrdenPago> getOrdenesPago() {
+        ArrayList<OrdenPago> list = new ArrayList<>();
         try(CallableStatement cstmt = con.prepareCall("{call dbo.getOrdenesPagoPendientes ()}");) {  
         ResultSet rs = cstmt.executeQuery();
         while (rs.next()) {
-                list.add(Integer.toString(rs.getInt(1)));
+            System.out.println(rs.getInt(3));
+                list.add(new OrdenPago(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4), getSpecificCliente(rs.getInt(3))));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+    
+    public Cliente getSpecificCliente(int id){
+        Cliente solicitado = null;
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.getSpecificClient  (?)}");) {  
+        cstmt.setInt(1, id); 
+        ResultSet rs = cstmt.executeQuery();
+        while (rs.next()) {
+            solicitado = new Cliente(id, rs.getString(2), rs.getString(3));
+        }
+        } catch (SQLException ex) {
+            System.out.println("sistemaautomoviles.ConnectionSQL.getSpecificCliente() se cayo");
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return solicitado;
     }
 
     public ArrayList<Combustible> combustibles() { 
@@ -216,6 +234,12 @@ public class ConnectionSQL {
                 System.out.println(tipo.getId());
                 insertarTipoDeModelo(idModelo, tipo.getId());
             }
+            for(Caracteristica carac:nuevoModelo.getCaracteristicas()){
+                insertarCaracteristicaDeModelo(idModelo,carac.getId());
+            }
+            for(Combustible combustible:nuevoModelo.getCombustibles()){
+                insertarCombusDeModelo(idModelo,combustible.getId());
+            }
         }
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
@@ -244,13 +268,35 @@ public class ConnectionSQL {
         cstmt.registerOutParameter(3, java.sql.Types.INTEGER);  
         cstmt.execute();
             System.out.println(cstmt.getInt(3));
-        /*if(cstmt.getInt(3)!=1){
-            resultado=true;
-        }*/
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //return resultado;
+    }
+    
+    public void insertarCaracteristicaDeModelo(int idModelo,int idCarac){
+        boolean resultado = false;
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.InsertCaractXModelo (?, ?, ?)}");) {  
+        cstmt.setInt(1, idCarac);
+        cstmt.setInt(2, idModelo);
+        cstmt.registerOutParameter(3, java.sql.Types.INTEGER);  
+        cstmt.execute();
+            System.out.println(cstmt.getInt(3));
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void insertarCombusDeModelo(int idModelo,int idCombus){
+        boolean resultado = false;
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.InsertCombXModelo (?, ?, ?)}");) {  
+        cstmt.setInt(1, idCombus);
+        cstmt.setInt(2, idModelo);
+        cstmt.registerOutParameter(3, java.sql.Types.INTEGER);  
+        cstmt.execute();
+            System.out.println(cstmt.getInt(3));
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
