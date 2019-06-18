@@ -68,3 +68,8 @@ create table InventarioSucursal(
 	IdVehiculo int not null
 );
 
+create table Comision(
+	Id int identity(1,1) PRIMARY KEY,
+	IdSucursal int foreign KEY REFERENCES Sucursal(IdSucursal),
+	monto int not null
+);
