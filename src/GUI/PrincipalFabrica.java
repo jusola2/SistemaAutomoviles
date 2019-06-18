@@ -128,7 +128,11 @@ public class PrincipalFabrica extends javax.swing.JFrame implements ControllerCo
 
     private void bEnviosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEnviosActionPerformed
         // TODO add your handling code here:
-        
+        Envios en = new Envios();
+        en.setController(controller);
+        en.ventanaAnterior(this);
+        en.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_bEnviosActionPerformed
 
     /**

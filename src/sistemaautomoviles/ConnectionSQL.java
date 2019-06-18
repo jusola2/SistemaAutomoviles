@@ -22,6 +22,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -259,6 +260,19 @@ public class ConnectionSQL {
         ResultSet rs = cstmt.executeQuery();
         while (rs.next()) {
                 list.add(new ModeloVehiculo(rs.getString(1),rs.getInt(2),rs.getInt(3)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public ArrayList<String> getSucursales(){
+        ArrayList<String> list = new ArrayList<>();
+        try(CallableStatement cstmt = con.prepareCall("{call dbo.getAllSucursales()}");) {  
+        ResultSet rs = cstmt.executeQuery();
+        while (rs.next()) {
+                list.add(rs.getString(1));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionSQL.class.getName()).log(Level.SEVERE, null, ex);
