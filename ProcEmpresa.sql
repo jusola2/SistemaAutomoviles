@@ -811,3 +811,81 @@ END
 --=============================== Inventario ======================================================================
 
 ---CrearInventario
+
+
+
+--=============================== Comision ======================================================================
+
+
+Go
+create procedure CRUD_Comision (@ID int, @IdFactura int, @Opc int,@Resultado int out)
+AS
+BEGIN 
+begin try
+		set @Resultado = 1;
+		IF @Opc = 1
+		BEGIN 
+			begin try
+				begin tran 
+					Declare @Sucursal int
+					set @Sucursal=(select op.idSucursal FROM [Facturacion].[dbo].[Factura] f 
+					inner join OrdenDePago op on f.IdOrdenPago= od.ID
+					where f.ID=@IdFactura)
+					Declare @Monto int
+					set @Monto=((select ac.monto FROM [Facturacion].[dbo].[Factura] f 
+					inner join alContado ac on f.ID= ac.IdFactura
+					where f.ID=@IdFactura)*0.10)
+					Insert Into Comision
+					Values  (@Sucursal,@Monto);
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 2
+		BEGIN
+			begin try
+				begin tran 
+					Declare @Sucursal int
+					set @Sucursal=(select op.idSucursal FROM [Facturacion].[dbo].[Factura] f 
+					inner join OrdenDePago op on f.IdOrdenPago= od.ID
+					where f.ID=@IdFactura)
+					Declare @Monto int
+					set @Monto=((select ac.monto FROM [Facturacion].[dbo].[Factura] f 
+					inner join alContado ac on f.ID= ac.IdFactura
+					where f.ID=@IdFactura)*0.10)
+					Update Comision Set IdSucursal=isnull(IdSucursal,@Sucursal),monto= ISNULL(monto,@Monto)
+					where Id=@ID
+				commit 
+			end try
+			begin catch
+				rollback 
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 3
+		BEGIN
+			begin try
+				begin tran
+					Delete from Comision where Id=@ID
+				commit 
+			end try
+			begin catch
+				rollback
+				set @Resultado = 0;
+			end catch
+		END
+		IF @Opc = 4
+		BEGIN
+			Select C.Id, S.NombreS NombreSucursal, C.monto
+			From Comision C
+			inner join Sucursal S on C.IdSucursal = S.IdSucursal 
+			Where C.Id=isnull(@Id,Id)
+		END
+	end try
+	begin catch
+		set @Resultado = 0;
+	end catch
+END
