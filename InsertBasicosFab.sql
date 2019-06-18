@@ -8,5 +8,5 @@ values ('Aros lujo',1000),('Interior Cuero',500),('Poralizado',100),('Radio Pich
 
 
 insert into TipoAuto
-values ('Pick up'),('Station Wagon'),('Sedan'),('Mini')
+values ('Pick up',2),('Station Wagon',5),('Sedan',4),('Mini',4)
 
