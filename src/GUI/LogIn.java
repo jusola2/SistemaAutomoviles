@@ -126,6 +126,12 @@ public class LogIn extends javax.swing.JFrame {
                 pc.ventanaAnterior(this);
                 pc.setVisible(true);
                 break;
+            case "Administrador Fabrica":
+                PrincipalFabrica pd = new PrincipalFabrica();
+                pd.setController(controller);
+                pd.ventanaAnterior(this);
+                pd.setVisible(true);
+                break;
             case "Facturador":
                 PrincipalFacturador pf = new PrincipalFacturador();
                 pf.setController(controller);

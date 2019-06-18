@@ -5,13 +5,22 @@
  */
 package GUI;
 
+import Controller.GlobalController;
+import Logic.ControllerCompatible;
+import Logic.ModeloVehiculo;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+
 /**
  *
  * @author steph
  */
-public class PrincipalFabrica extends javax.swing.JFrame {
+public class PrincipalFabrica extends javax.swing.JFrame implements ControllerCompatible{
 
-    /**
+    protected GlobalController controller;
+    private JFrame anterior;
+    /*
      * Creates new form PrincipalFabrica
      */
     public PrincipalFabrica() {
@@ -30,7 +39,8 @@ public class PrincipalFabrica extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         bntEmpleados = new javax.swing.JButton();
         bntAutos = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        atras = new javax.swing.JButton();
+        bEnvios = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,10 +60,17 @@ public class PrincipalFabrica extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Atrás");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        atras.setText("Atrás");
+        atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                atrasActionPerformed(evt);
+            }
+        });
+
+        bEnvios.setText("Envios");
+        bEnvios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEnviosActionPerformed(evt);
             }
         });
 
@@ -65,27 +82,31 @@ public class PrincipalFabrica extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 128, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(bntAutos, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bntEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addGap(159, 159, 159))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(atras)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 126, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(bEnvios, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(bntAutos, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(bntEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1)))
+                        .addGap(159, 159, 159))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
+                .addComponent(bEnvios, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(bntAutos, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addComponent(bntEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
-                .addComponent(jButton1)
+                .addComponent(atras)
                 .addContainerGap())
         );
 
@@ -97,16 +118,18 @@ public class PrincipalFabrica extends javax.swing.JFrame {
     }//GEN-LAST:event_bntEmpleadosActionPerformed
 
     private void bntAutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAutosActionPerformed
-        AutoFabrica autoF = new AutoFabrica();
-        autoF.setVisible(true);
-        autoF.dispose();
+        
     }//GEN-LAST:event_bntAutosActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        LogIn l=new LogIn();
-        l.setVisible(true);
-        l.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
+        anterior.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_atrasActionPerformed
+
+    private void bEnviosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEnviosActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_bEnviosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,9 +168,22 @@ public class PrincipalFabrica extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton atras;
+    private javax.swing.JButton bEnvios;
     private javax.swing.JButton bntAutos;
     private javax.swing.JButton bntEmpleados;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setController(GlobalController Pcontroller){
+        controller = Pcontroller;
+    }
+    
+    
+
+    @Override
+    public void ventanaAnterior(JFrame ventana) {
+        anterior=ventana;
+    }
 }
